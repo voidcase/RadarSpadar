@@ -16,18 +16,21 @@ public class Vector2D {
 		return y;
     }
 
-	public void add(Vector2D vector) {
-		x = x + vector.x;
-		y = y + vector.y;
+	public Vector2D add(Vector2D vector) {
+		float rx = x + vector.x;
+		float ry = y + vector.y;
+		return new Vector2D(rx,ry);
 	}
 	
-	public void scale(float scalar) {
-		x *= scalar;
-		y *= scalar;
+	public Vector2D scale(float scalar) {
+		float rx = x*scalar;
+		float ry = y*scalar;
+		return new Vector2D(rx,ry);
 	}
 	
 	public Vector2D normalize() {
-		//TODO implement
-		return this;
+		float rx = x/(float)Math.sqrt(x*x + y*y);
+		float ry = y/(float)Math.sqrt(x*x + y*y);
+		return new Vector2D(rx,ry);
 	}
 }
