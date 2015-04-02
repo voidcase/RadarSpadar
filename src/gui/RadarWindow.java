@@ -74,11 +74,12 @@ public class RadarWindow extends JFrame implements Observer {
 //		System.out.println("RadarWindow.update()");
 		Vector2D arrowDir = generateArrowDirection();
 		
-		// Section: example of some logic that moves 
+		// Section: example of some logic that moves a label around
 		Rectangle bounds = placeholder.getBounds();
 		int x = bounds.x + (int) arrowDir.getX();
 		int y = bounds.y + (int) arrowDir.getY();
 		placeholder.setBounds(x, y, bounds.width, bounds.height);
+		System.out.println(placeholder.getBounds());
 	}
 	
 	private Vector2D generateArrowDirection() {
