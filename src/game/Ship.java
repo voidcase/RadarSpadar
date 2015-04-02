@@ -1,7 +1,5 @@
 package game;
 
-import java.awt.Polygon;
-
 public abstract class Ship {
 	
 	protected String name;
