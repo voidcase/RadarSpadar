@@ -1,16 +1,13 @@
 package gui;
 
+import game.Vector2D;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-
-import com.sun.corba.se.spi.orbutil.fsm.Action;
-import com.sun.corba.se.spi.orbutil.fsm.FSM;
-import com.sun.corba.se.spi.orbutil.fsm.Input;
 
 public class RadarWindow extends JFrame implements Observer, KeyListener {
 	private long lastFrameTimeStamp;
@@ -29,7 +26,22 @@ public class RadarWindow extends JFrame implements Observer, KeyListener {
 		long timeDeltaMillis = currentFrameTimeStamp - lastFrameTimeStamp;
 		lastFrameTimeStamp = currentFrameTimeStamp;
 		
+		Vector2D arrowDir = generateArrowDirection();
 		//code
+	}
+	
+	private Vector2D generateArrowDirection() {
+		float vert = 0;
+		float hori = 0;
+		if(arrowUp)
+			vert++;
+		if(arrowDown)
+			vert--;
+		if(arrowRight)
+			hori++;
+		if(arrowLeft)
+			hori--;
+		return new Vector2D(vert, hori);
 	}
 	
 	@Override
