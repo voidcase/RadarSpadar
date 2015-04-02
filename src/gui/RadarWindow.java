@@ -3,29 +3,40 @@ package gui;
 import game.Space;
 import game.Vector2D;
 
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
-import javax.swing.JTextField;
+import javax.swing.JLabel;
 
-public class RadarWindow extends JFrame implements Observer, KeyListener {
-	private boolean arrowUp = false;
-	private boolean arrowDown = false;
-	private boolean arrowRight = false;
-	private boolean arrowLeft = false;
+import datastructures.ArrowKeyListener;
+
+public class RadarWindow extends JFrame implements Observer {
+	protected long timeDeltaMillis;
 	
-	private JTextField placeholder;
+	private static final long serialVersionUID = -8212981428372798858L;
+	private ArrowKeyListener arrowKeyListener;
+	private long lastFrameTime;
+	private JLabel placeholder;
 	
 	public RadarWindow(Space space) {
-		placeholder = new JTextField("asd");
+		super("Radar Window");
+		placeholder = new JLabel("asd");
+		placeholder.setBounds(100, 100, 25, 45);
 		add(placeholder);
+		
+		arrowKeyListener = new ArrowKeyListener();
+		addKeyListener(arrowKeyListener);
+		
+		setSize(500, 700);
+		setLayout(null);	//ensures that absolute positioning is possible
+		setVisible(true);
+		initLoop();
 	}
 	
-	private long lastFrameTime;
-	private long timeDeltaMillis;
 	
 	private void initLoop() {
 		Thread loopUpdate = new Thread() {
@@ -60,51 +71,29 @@ public class RadarWindow extends JFrame implements Observer, KeyListener {
 	
 	/** Insert game logic here */
 	protected void update() {
-		
+//		System.out.println("RadarWindow.update()");
 		Vector2D arrowDir = generateArrowDirection();
-		//code
+		
+		// Section: example of some logic that moves 
+		Rectangle bounds = placeholder.getBounds();
+		int x = bounds.x + (int) arrowDir.getX();
+		int y = bounds.y + (int) arrowDir.getY();
+		placeholder.setBounds(x, y, bounds.width, bounds.height);
 	}
 	
 	private Vector2D generateArrowDirection() {
 		float vert = 0;
 		float hori = 0;
-		if(arrowUp)
+		if(arrowKeyListener.getArrowUp())
 			vert++;
-		if(arrowDown)
+		if(arrowKeyListener.getArrowDown())
 			vert--;
-		if(arrowRight)
+		if(arrowKeyListener.getArrowRight())
 			hori++;
-		if(arrowLeft)
+		if(arrowKeyListener.getArrowLeft())
 			hori--;
+		if(hori != 0 && vert != 0)
+			System.out.println("hori = " + hori + " vert = " + vert);
 		return new Vector2D(vert, hori);
-	}
-	
-	@Override
-	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_UP)
-			arrowUp = true;
-		if(e.getKeyCode() == KeyEvent.VK_DOWN)
-			arrowDown = true;
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT)
-			arrowRight = true;
-		if(e.getKeyCode() == KeyEvent.VK_LEFT)
-			arrowLeft = true;
-	}
-	
-	@Override
-	public void keyReleased(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_UP)
-			arrowUp = false;
-		if(e.getKeyCode() == KeyEvent.VK_DOWN)
-			arrowDown = false;
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT)
-			arrowRight = false;
-		if(e.getKeyCode() == KeyEvent.VK_LEFT)
-			arrowLeft = false;		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// this is irrelevant
 	}
 }
