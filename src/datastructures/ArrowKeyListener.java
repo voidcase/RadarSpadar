@@ -28,10 +28,14 @@ public class ArrowKeyListener implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		arrowUp = e.getKeyCode() == KeyEvent.VK_UP;
-		arrowDown = e.getKeyCode() == KeyEvent.VK_DOWN;
-		arrowRight = e.getKeyCode() == KeyEvent.VK_RIGHT;
-		arrowLeft = e.getKeyCode() == KeyEvent.VK_LEFT;
+		if(e.getKeyCode() == KeyEvent.VK_UP)
+			arrowUp = true;
+		if(e.getKeyCode() == KeyEvent.VK_DOWN)
+			arrowDown = true;
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+			arrowRight = true;
+		if(e.getKeyCode() == KeyEvent.VK_LEFT)
+			arrowLeft = true;
 	}
 	
 	@Override

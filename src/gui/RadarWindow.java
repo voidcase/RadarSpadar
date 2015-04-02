@@ -77,10 +77,9 @@ public class RadarWindow extends JFrame implements Observer {
 		arrowDir = arrowDir.scale(timeDelta * 0.1);
 		
 		// Section: example of some logic that moves a label around
-		phPos.setX(phPos.getX() + arrowDir.getX());
-		phPos.setY(phPos.getY() + arrowDir.getY());
-		Rectangle bounds = placeholder.getBounds();
-		placeholder.setBounds((int) phPos.getX(), (int) phPos.getY(), bounds.width, bounds.height);
+		phPos = phPos.add(arrowDir);
+		placeholder.setBounds((int) phPos.getX(), (int) phPos.getY(),
+				placeholder.getBounds().width, placeholder.getBounds().height);
 	}
 	
 	private Vector2D generateArrowDirection() {
