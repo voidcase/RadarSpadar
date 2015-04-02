@@ -36,10 +36,14 @@ public class ArrowKeyListener implements KeyListener {
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
-		arrowUp = e.getKeyCode() == KeyEvent.VK_UP;
-		arrowDown = e.getKeyCode() == KeyEvent.VK_DOWN;
-		arrowRight = e.getKeyCode() == KeyEvent.VK_RIGHT;
-		arrowLeft = e.getKeyCode() == KeyEvent.VK_LEFT;
+		if(e.getKeyCode() == KeyEvent.VK_UP)
+			arrowUp = false;
+		if(e.getKeyCode() == KeyEvent.VK_DOWN)
+			arrowDown = false;
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+			arrowRight = false;
+		if(e.getKeyCode() == KeyEvent.VK_LEFT)
+			arrowLeft = false;
 	}
 
 	@Override
