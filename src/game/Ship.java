@@ -2,11 +2,13 @@ package game;
 
 public abstract class Ship {
 	
-	protected String name;
-	protected Vector2D pos;
-	protected double angle;
+	protected String name = "o";
+	protected Vector2D pos = new Vector2D(0,0);
+	protected double angle = 0;
 	//protected Vector2D vel;
+	
 	public abstract void move();
+	
 	public void setPos(Vector2D pos){
 		this.pos = pos;
 	}
