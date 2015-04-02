@@ -25,9 +25,7 @@ public class RadarWindow extends JFrame implements Observer, KeyListener {
 				lastFrameTime = System.currentTimeMillis();
 				while(!isInterrupted()) {
 					try {
-						long currentFrameTime = System.currentTimeMillis();
-						timeDeltaMillis = currentFrameTime - lastFrameTime;
-						lastFrameTime = currentFrameTime;
+						updateTimeStamps();
 						update();
 						sleep(1000 * (1/60));
 					} catch (InterruptedException e) {
@@ -39,8 +37,15 @@ public class RadarWindow extends JFrame implements Observer, KeyListener {
 		loopUpdate.start();
 	}
 	
+	private void updateTimeStamps() {
+		long currentFrameTime = System.currentTimeMillis();
+		timeDeltaMillis = currentFrameTime - lastFrameTime;
+		lastFrameTime = currentFrameTime;
+	}
+	
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		updateTimeStamps();
 		update();
 	}
 	
