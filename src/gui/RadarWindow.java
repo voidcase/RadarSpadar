@@ -71,9 +71,8 @@ public class RadarWindow extends JFrame implements Observer {
 	
 	/** Insert game logic here */
 	protected void update() {
-//		System.out.println("RadarWindow.update()");
-		Vector2D arrowDir = generateArrowDirection().normalize();
-		arrowDir.scale(0.1f);
+		Vector2D arrowDir = generateArrowDirection();
+		arrowDir = arrowDir.normalize();
 		
 		// Section: example of some logic that moves a label around
 		Rectangle bounds = placeholder.getBounds();
