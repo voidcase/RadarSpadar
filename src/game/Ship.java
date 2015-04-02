@@ -1,7 +1,11 @@
 package game;
 
-import java.awt.Point;
-
 public abstract class Ship {
 	
+	public void setDir(){
+		
+	}
+	public void accelerate(){
+		
+	}
 }
