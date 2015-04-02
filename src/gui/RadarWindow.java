@@ -16,6 +16,23 @@ public class RadarWindow extends JFrame implements Observer, KeyListener {
 	private boolean arrowRight = false;
 	private boolean arrowLeft = false;
 	
+	private void initLoop() {
+		Thread loopUpdate = new Thread() {
+			@Override
+			public void run() {
+				while(!isInterrupted()) {
+					try {
+						update();
+						sleep(1000 * (1/60));
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		loopUpdate.start();
+	}
+	
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		update();
