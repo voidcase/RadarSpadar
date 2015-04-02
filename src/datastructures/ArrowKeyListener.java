@@ -8,6 +8,9 @@ public class ArrowKeyListener implements KeyListener {
 	private boolean arrowDown = false;
 	private boolean arrowRight = false;
 	private boolean arrowLeft = false;
+	private boolean qPressed = false;
+	private boolean ePressed = false;
+	
 	
 	public boolean getArrowUp() {
 		return arrowUp;
@@ -25,6 +28,14 @@ public class ArrowKeyListener implements KeyListener {
 		return arrowLeft;
 	}
 
+	public boolean getQPressed() {
+		return qPressed;
+	}
+
+	public boolean getEPressed() {
+		return ePressed;
+	}
+
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -36,6 +47,10 @@ public class ArrowKeyListener implements KeyListener {
 			arrowRight = true;
 		if(e.getKeyCode() == KeyEvent.VK_LEFT)
 			arrowLeft = true;
+		if(e.getKeyCode() == KeyEvent.VK_Q)
+			qPressed = true;
+		if(e.getKeyCode() == KeyEvent.VK_E)
+			ePressed = true;
 	}
 	
 	@Override
@@ -48,6 +63,10 @@ public class ArrowKeyListener implements KeyListener {
 			arrowRight = false;
 		if(e.getKeyCode() == KeyEvent.VK_LEFT)
 			arrowLeft = false;
+		if(e.getKeyCode() == KeyEvent.VK_Q)
+			qPressed = false;
+		if(e.getKeyCode() == KeyEvent.VK_E)
+			ePressed = false;
 	}
 
 	@Override
