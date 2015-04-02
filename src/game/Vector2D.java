@@ -1,36 +1,36 @@
 package game;
 
 public class Vector2D {
-    private float x, y;
+    private double x, y;
 
-    public Vector2D(float x, float y) {
+    public Vector2D(double x, double y) {
 		this.x = x;
 		this.y = y;
     }
     
-    public float getX() {
+    public double getX() {
 		return x;
     }
     
-    public float getY() {
+    public double getY() {
 		return y;
     }
 
 	public Vector2D add(Vector2D vector) {
-		float rx = x + vector.x;
-		float ry = y + vector.y;
+		double rx = x + vector.x;
+		double ry = y + vector.y;
 		return new Vector2D(rx,ry);
 	}
 	
-	public Vector2D scale(float scalar) {
-		float rx = x*scalar;
-		float ry = y*scalar;
+	public Vector2D scale(double scalar) {
+		double rx = x*scalar;
+		double ry = y*scalar;
 		return new Vector2D(rx,ry);
 	}
 	
 	public Vector2D normalize() {
-		float rx = x/(float)Math.sqrt(x*x + y*y);
-		float ry = y/(float)Math.sqrt(x*x + y*y);
+		double rx = x/Math.sqrt(x*x + y*y);
+		double ry = y/Math.sqrt(x*x + y*y);
 		return new Vector2D(rx,ry);
 	}
 }
