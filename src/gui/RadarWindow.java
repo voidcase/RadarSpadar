@@ -15,17 +15,19 @@ import javax.swing.JLabel;
 import datastructures.ArrowKeyListener;
 
 public class RadarWindow extends JFrame implements Observer {
-	protected long timeDeltaMillis;
+	protected long timeDelta;
 	
 	private static final long serialVersionUID = -8212981428372798858L;
 	private ArrowKeyListener arrowKeyListener;
 	private long lastFrameTime;
 	private JLabel placeholder;
+	private Vector2D phPos;
 	
 	public RadarWindow(Space space) {
 		super("Radar Window");
 		placeholder = new JLabel("asd");
 		placeholder.setBounds(100, 100, 25, 45);
+		phPos = new Vector2D(placeholder.getBounds().getX(), placeholder.getBounds().getY());
 		add(placeholder);
 		
 		arrowKeyListener = new ArrowKeyListener();
@@ -59,7 +61,7 @@ public class RadarWindow extends JFrame implements Observer {
 	
 	private void updateTimeStamps() {
 		long currentFrameTime = System.currentTimeMillis();
-		timeDeltaMillis = currentFrameTime - lastFrameTime;
+		timeDelta = currentFrameTime - lastFrameTime;
 		lastFrameTime = currentFrameTime;
 	}
 	
@@ -72,29 +74,28 @@ public class RadarWindow extends JFrame implements Observer {
 	/** Insert game logic here */
 	protected void update() {
 		Vector2D arrowDir = generateArrowDirection();
-		arrowDir = arrowDir.normalize();
+		arrowDir = arrowDir.scale(timeDelta * 0.1);
 		
 		// Section: example of some logic that moves a label around
+		phPos.setX(phPos.getX() + arrowDir.getX());
+		phPos.setY(phPos.getY() + arrowDir.getY());
 		Rectangle bounds = placeholder.getBounds();
-		int x = bounds.x + (int) arrowDir.getX();
-		int y = bounds.y + (int) arrowDir.getY();
-		placeholder.setBounds(x, y, bounds.width, bounds.height);
-//		System.out.println(placeholder.getBounds());
+		placeholder.setBounds((int) phPos.getX(), (int) phPos.getY(), bounds.width, bounds.height);
 	}
 	
 	private Vector2D generateArrowDirection() {
 		float vert = 0;
 		float hori = 0;
 		if(arrowKeyListener.getArrowUp())
-			vert++;
-		if(arrowKeyListener.getArrowDown())
 			vert--;
+		if(arrowKeyListener.getArrowDown())
+			vert++;
 		if(arrowKeyListener.getArrowRight())
 			hori++;
 		if(arrowKeyListener.getArrowLeft())
 			hori--;
 		if(hori != 0 && vert != 0)
 			System.out.println("hori = " + hori + " vert = " + vert);
-		return new Vector2D(vert, hori);
+		return new Vector2D(hori, vert);
 	}
 }
