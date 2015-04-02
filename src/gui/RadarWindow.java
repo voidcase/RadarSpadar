@@ -1,5 +1,6 @@
 package gui;
 
+import game.Space;
 import game.Vector2D;
 
 import java.awt.event.KeyEvent;
@@ -8,12 +9,20 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 
 public class RadarWindow extends JFrame implements Observer, KeyListener {
 	private boolean arrowUp = false;
 	private boolean arrowDown = false;
 	private boolean arrowRight = false;
 	private boolean arrowLeft = false;
+	
+	private JTextField placeholder;
+	
+	public RadarWindow(Space space) {
+		placeholder = new JTextField("asd");
+		add(placeholder);
+	}
 	
 	private long lastFrameTime;
 	private long timeDeltaMillis;
