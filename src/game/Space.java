@@ -19,7 +19,7 @@ public class Space extends Observable {
 		ArrayList<String> labels = new ArrayList<String>();
 		for(Ship s : ships){
 			if(origin.distance(s.getPos())<=range){
-				labels.add(s.toString());
+				labels.add(s);
 			}
 		}
 		return labels;

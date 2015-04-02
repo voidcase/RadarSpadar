@@ -1,8 +1,8 @@
 package game;
 
-import java.awt.Polygon;
-
 public abstract class Ship {
+	
+	protected String name;
 	protected Vector2D pos;
 	protected double angle;
 	//protected Vector2D vel;
