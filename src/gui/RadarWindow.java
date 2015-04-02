@@ -3,29 +3,38 @@ package gui;
 import game.Space;
 import game.Vector2D;
 
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
-import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 public class RadarWindow extends JFrame implements Observer, KeyListener {
+	protected long timeDeltaMillis;
+
 	private boolean arrowUp = false;
 	private boolean arrowDown = false;
 	private boolean arrowRight = false;
 	private boolean arrowLeft = false;
 	
-	private JTextField placeholder;
+	private JLabel placeholder;
+	private long lastFrameTime;
 	
 	public RadarWindow(Space space) {
-		placeholder = new JTextField("asd");
+		super("Radar Window");
+		placeholder = new JLabel("asd");
+		placeholder.setBounds(100, 100, 25, 45);
 		add(placeholder);
+		
+		setSize(500, 700);
+		setLayout(null);	//ensures that absolute positioning is possible
+		setVisible(true);
+		initLoop();
 	}
 	
-	private long lastFrameTime;
-	private long timeDeltaMillis;
 	
 	private void initLoop() {
 		Thread loopUpdate = new Thread() {
@@ -60,9 +69,14 @@ public class RadarWindow extends JFrame implements Observer, KeyListener {
 	
 	/** Insert game logic here */
 	protected void update() {
-		
+//		System.out.println("RadarWindow.update()");
 		Vector2D arrowDir = generateArrowDirection();
-		//code
+		
+		// Section: example of some logic that moves 
+		Rectangle bounds = placeholder.getBounds();
+		int x = bounds.x + (int) arrowDir.getX();
+		int y = bounds.y + (int) arrowDir.getY();
+		placeholder.setBounds(x, y, bounds.width, bounds.height);
 	}
 	
 	private Vector2D generateArrowDirection() {
@@ -76,6 +90,8 @@ public class RadarWindow extends JFrame implements Observer, KeyListener {
 			hori++;
 		if(arrowLeft)
 			hori--;
+		if(hori != 0 && vert != 0)
+			System.out.println("hori = " + hori + " vert = " + vert);
 		return new Vector2D(vert, hori);
 	}
 	
