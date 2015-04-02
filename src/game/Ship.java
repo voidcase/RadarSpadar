@@ -1,5 +1,9 @@
 package game;
 
-public class Ship {
+import java.awt.Point;
 
+public class Ship {
+	Point position = new Point();
+	int dir = 0;
+	
 }
