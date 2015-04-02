@@ -2,7 +2,7 @@ package game;
 
 import java.awt.Point;
 
-public class Ship {
+public abstract class Ship {
 	Point position = new Point();
 	int dir = 0;
 	
