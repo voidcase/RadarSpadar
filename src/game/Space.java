@@ -15,11 +15,11 @@ public class Space extends Observable {
 		content.add(s);
 	}
 
-	public ArrayList<String> scan(Vector2D origin, int range){
-		ArrayList<String> labels = new ArrayList<String>();
+	public ArrayList<Ship> scan(Vector2D origin, int range){
+		ArrayList<Ship> labels = new ArrayList<Ship>();
 		for(Ship s : content){
 			if(origin.distance(s.getPos())<=range){
-				labels.add(s.toString());
+				labels.add(s);
 			}
 		}
 		return labels;

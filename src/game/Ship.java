@@ -4,6 +4,7 @@ import java.awt.Polygon;
 
 public abstract class Ship {
 	
+	protected String name;
 	protected Vector2D pos;
 	//protected Vector2D dir;
 	//protected Vector2D vel;
