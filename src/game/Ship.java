@@ -19,7 +19,12 @@ public abstract class Ship {
 		return pos;
 	}
 	public Polygon getSymbol(){
-		//TODO
-		return null;
+		Polygon p = new Polygon();
+		//default romb
+		p.addPoint( 1,  0);
+		p.addPoint(-1,  0);
+		p.addPoint( 0,  1);
+		p.addPoint( 0, -1);
+		return p;
 	}
 }

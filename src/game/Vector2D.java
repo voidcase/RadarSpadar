@@ -20,4 +20,14 @@ public class Vector2D {
 		x = x + vector.x;
 		y = y + vector.y;
 	}
+	
+	public void scale(float scalar) {
+		x *= scalar;
+		y *= scalar;
+	}
+	
+	public Vector2D normalize() {
+		//TODO implement
+		return this;
+	}
 }
