@@ -10,18 +10,24 @@ import java.util.Observer;
 import javax.swing.JFrame;
 
 public class RadarWindow extends JFrame implements Observer, KeyListener {
-	private long lastFrameTimeStamp;
 	private boolean arrowUp = false;
 	private boolean arrowDown = false;
 	private boolean arrowRight = false;
 	private boolean arrowLeft = false;
 	
+	private long lastFrameTime;
+	private long timeDeltaMillis;
+	
 	private void initLoop() {
 		Thread loopUpdate = new Thread() {
 			@Override
 			public void run() {
+				lastFrameTime = System.currentTimeMillis();
 				while(!isInterrupted()) {
 					try {
+						long currentFrameTime = System.currentTimeMillis();
+						timeDeltaMillis = currentFrameTime - lastFrameTime;
+						lastFrameTime = currentFrameTime;
 						update();
 						sleep(1000 * (1/60));
 					} catch (InterruptedException e) {
@@ -38,10 +44,8 @@ public class RadarWindow extends JFrame implements Observer, KeyListener {
 		update();
 	}
 	
-	private void update() {
-		long currentFrameTimeStamp = System.currentTimeMillis();
-		long timeDeltaMillis = currentFrameTimeStamp - lastFrameTimeStamp;
-		lastFrameTimeStamp = currentFrameTimeStamp;
+	/** Insert game logic here */
+	protected void update() {
 		
 		Vector2D arrowDir = generateArrowDirection();
 		//code
