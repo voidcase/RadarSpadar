@@ -1,27 +1,31 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 public class Space extends Observable {
-	
-	ArrayList<Ship> content;
+	List<Ship> ships;
 	
 	public Space(){
-		content = new ArrayList<Ship>();
+		ships = new ArrayList<Ship>();
 	}
 	
 	void spawnShip(Ship s){
-		content.add(s);
+		ships.add(s);
 	}
 
-	public ArrayList<Ship> scan(Vector2D origin, int range){
-		ArrayList<Ship> labels = new ArrayList<Ship>();
-		for(Ship s : content){
+	public ArrayList<String> scan(Vector2D origin, int range){
+		ArrayList<String> labels = new ArrayList<String>();
+		for(Ship s : ships){
 			if(origin.distance(s.getPos())<=range){
 				labels.add(s);
 			}
 		}
 		return labels;
+	}
+	
+	public List<Ship> getShipList() {
+		return ships;
 	}
 }
