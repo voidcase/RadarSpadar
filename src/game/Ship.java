@@ -6,7 +6,7 @@ public abstract class Ship {
 	protected Vector2D pos;
 	protected double angle;
 	//protected Vector2D vel;
-	
+	public abstract void move();
 	public void setPos(Vector2D pos){
 		this.pos = pos;
 	}
