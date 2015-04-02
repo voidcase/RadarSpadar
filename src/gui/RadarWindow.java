@@ -35,6 +35,7 @@ public class RadarWindow extends JFrame implements Observer {
 		
 		setSize(500, 700);
 		setLayout(null);	//ensures that absolute positioning is possible
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		initLoop();
 	}
