@@ -23,6 +23,10 @@ public class Vector2D {
     public double getY() {
 		return y;
     }
+    
+    public double distance(Vector2D other){
+    	return Math.sqrt(Math.pow(x-other.x,2) + Math.pow(y-other.y,2));
+    }
 
 	public Vector2D add(Vector2D vector) {
 		double rx = x + vector.x;

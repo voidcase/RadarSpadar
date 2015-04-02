@@ -1,7 +1,5 @@
 package game;
 
-import java.awt.Polygon;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -16,13 +14,14 @@ public class Space extends Observable {
 	void spawnShip(Ship s){
 		content.add(s);
 	}
-	public ArrayList<Polygon> scan(Point2D origin, int range){
-		ArrayList<Polygon> polys = new ArrayList<Polygon>();
+
+	public ArrayList<String> scan(Vector2D origin, int range){
+		ArrayList<String> labels = new ArrayList<String>();
 		for(Ship s : content){
 			if(origin.distance(s.getPos())<=range){
-				polys.add(s.getSymbol());
+				labels.add(s.toString());
 			}
 		}
-		return polys;
+		return labels;
 	}
 }
