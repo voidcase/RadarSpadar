@@ -87,6 +87,7 @@ public class RadarWindow extends JFrame {
 		space.spawnShip(p3);
 	}
 	
+	// TODO add a better fucking name...
 	private class AComponentListener implements ComponentListener {
 
 		@Override
@@ -108,6 +109,5 @@ public class RadarWindow extends JFrame {
 		public void componentShown(ComponentEvent e) {
 			// do nothing
 		}
-		
 	}
 }
