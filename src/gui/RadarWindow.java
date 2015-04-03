@@ -6,8 +6,8 @@ import game.Ship;
 import game.Space;
 import game.Vector2D;
 
-import java.util.Observable;
-import java.util.Observer;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.JFrame;
 
@@ -32,6 +32,7 @@ public class RadarWindow extends JFrame {
 		renderPanel.setBounds(0, 0, 500, 700);
 		add(renderPanel);
 		
+		addComponentListener(new AComponentListener());
 		setSize(500, 700);
 		setLayout(null);	//ensures that absolute positioning is possible
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -86,5 +87,27 @@ public class RadarWindow extends JFrame {
 		space.spawnShip(p3);
 	}
 	
-	
+	private class AComponentListener implements ComponentListener {
+
+		@Override
+		public void componentHidden(ComponentEvent e) {
+			// do nothing
+		}
+
+		@Override
+		public void componentMoved(ComponentEvent e) {
+			// do nothing
+		}
+
+		@Override
+		public void componentResized(ComponentEvent e) {
+			renderPanel.setSize(getSize());
+		}
+
+		@Override
+		public void componentShown(ComponentEvent e) {
+			// do nothing
+		}
+		
+	}
 }
