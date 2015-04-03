@@ -2,6 +2,7 @@ package gui;
 
 import game.Ship;
 import game.Space;
+import game.Vector2D;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -46,8 +47,14 @@ public class RenderPanel extends JPanel {
 		
 		g2.setColor(Color.green);
 		g2.setFont(new Font("Consolas", Font.PLAIN, 12));
+		float centerX = (float) getSize().getWidth()/2;
+		float centerY = (float) getSize().getHeight()/2;
+//		System.out.println("centerX = " + center);
 		for(Ship ship : ships) {
-			g2.drawString(ship.toString(), (float)ship.getPos().getX(), (float)ship.getPos().getY());
+			Vector2D relpos = ship.getPos().add(following.getPos().scale(-1));
+			g2.drawString(ship.toString(), 
+					centerX + (float)relpos.getX(), 
+					centerY + (float)relpos.getY());
 		}
 	}
 	
