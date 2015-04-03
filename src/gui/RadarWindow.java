@@ -14,7 +14,13 @@ import datastructures.KeyboardStateListener;
 
 public class RadarWindow extends JFrame implements Observer {
 	/** difference of time between frames, in milliseconds*/
-	protected double timeDelta;
+	protected static double timeDelta;
+	public static double getFPS() {
+		if (timeDelta != 0)
+			return 1/(timeDelta*0.001);
+		else
+			return -1;
+	}
 	
 	private static final long serialVersionUID = -8212981428372798858L;
 	private KeyboardStateListener keyboardStateListener;
@@ -29,8 +35,8 @@ public class RadarWindow extends JFrame implements Observer {
 		keyboardStateListener = new KeyboardStateListener();
 		addKeyListener(keyboardStateListener);
 
-		space = new Space();
-		generateShips(space);
+		this.space = space;
+		generateShips();
 		renderPanel = new RenderPanel(space);
 		renderPanel.setBounds(0, 0, 500, 700);
 		add(renderPanel);
@@ -49,14 +55,9 @@ public class RadarWindow extends JFrame implements Observer {
 			public void run() {
 				lastFrameTime = System.nanoTime();
 				while(!isInterrupted()) {
-					try {
-						updateTimeStamps();
-						update();
-						renderPanel.repaint();
-						sleep(1000 * (1/60));
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					updateTimeStamps();
+					update();
+					renderPanel.repaint();
 				}
 			}
 		};
@@ -65,7 +66,7 @@ public class RadarWindow extends JFrame implements Observer {
 
 	/** Insert game logic here */
 	protected void update() {
-		Vector2D arrowDir = generateArrowDirection().scale(timeDelta * 0.1);
+		Vector2D arrowDir = generateArrowDirection().scale(timeDelta *0.1);
 		p1.setPos(p1.getPos().add(arrowDir));
 	}
 	
@@ -81,19 +82,19 @@ public class RadarWindow extends JFrame implements Observer {
 		update();
 	}
 	
-	private void generateShips(Space space) {
+	private void generateShips() {
 		p1 = new PlayerShip();
-		Ship p2 = new PlayerShip();
-		Ship p3 = new PlayerShip();
+//		Ship p2 = new PlayerShip();
+//		Ship p3 = new PlayerShip();
 		p1.setPos(new Vector2D(50, 40));
-		p2.setPos(new Vector2D(20, 250));
-		p3.setPos(new Vector2D(100, 100));
+//		p2.setPos(new Vector2D(20, 250));
+//		p3.setPos(new Vector2D(100, 100));
 		p1.setAngle(0);
-		p2.setAngle(0);
-		p3.setAngle(0);
+//		p2.setAngle(0);
+//		p3.setAngle(0);
 		space.spawnShip(p1);
-		space.spawnShip(p2);
-		space.spawnShip(p3);
+//		space.spawnShip(p2);
+//		space.spawnShip(p3);
 	}
 	
 	private Vector2D generateArrowDirection() {
