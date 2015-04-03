@@ -13,10 +13,12 @@ import javax.swing.JFrame;
 import datastructures.KeyboardStateListener;
 
 public class RadarWindow extends JFrame implements Observer {
-	protected long timeDelta;
+	/** difference of time between frames, in milliseconds*/
+	protected double timeDelta;
 	
 	private static final long serialVersionUID = -8212981428372798858L;
 	private KeyboardStateListener keyboardStateListener;
+	/** timestamp from when the last frame started rendering, in nanoseconds*/
 	private long lastFrameTime;
 	private RenderPanel renderPanel;
 	private Space space;
@@ -45,7 +47,7 @@ public class RadarWindow extends JFrame implements Observer {
 		Thread loopUpdate = new Thread() {
 			@Override
 			public void run() {
-				lastFrameTime = System.currentTimeMillis();
+				lastFrameTime = System.nanoTime();
 				while(!isInterrupted()) {
 					try {
 						updateTimeStamps();
@@ -68,8 +70,8 @@ public class RadarWindow extends JFrame implements Observer {
 	}
 	
 	private void updateTimeStamps() {
-		long currentFrameTime = System.currentTimeMillis();
-		timeDelta = currentFrameTime - lastFrameTime;
+		long currentFrameTime = System.nanoTime();
+		timeDelta = (currentFrameTime - lastFrameTime) * 0.000001;
 		lastFrameTime = currentFrameTime;
 	}
 	
