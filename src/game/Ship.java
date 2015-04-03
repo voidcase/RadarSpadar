@@ -30,6 +30,6 @@ public abstract class Ship {
 	}
 
 	public String toString(){
-		return "[ship]";
+		return name;
 	}
 }

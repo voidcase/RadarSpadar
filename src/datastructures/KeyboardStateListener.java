@@ -1,5 +1,7 @@
 package datastructures;
 
+import game.Vector2D;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -49,7 +51,21 @@ public class KeyboardStateListener implements KeyListener {
 		if(e.getKeyCode() == KeyEvent.VK_LEFT)
 			arrowLeft = false;
 	}
-
+	
+	public Vector2D generateArrowDirection() {
+		float vert = 0;
+		float hori = 0;
+		if(arrowUp)
+			vert--;
+		if(arrowDown)
+			vert++;
+		if(arrowRight)
+			hori++;
+		if(arrowLeft)
+			hori--;
+		return new Vector2D(hori, vert);
+	}
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// this is irrelevant

@@ -28,4 +28,10 @@ public class Space extends Observable {
 	public List<Ship> getShipList() {
 		return ships;
 	}
+	
+	public void moveAll(){
+		for(Ship s : ships){
+			s.move();
+		}
+	}
 }

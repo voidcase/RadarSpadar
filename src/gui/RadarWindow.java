@@ -1,5 +1,6 @@
 package gui;
 
+import game.DrunkenShip;
 import game.PlayerShip;
 import game.Ship;
 import game.Space;
@@ -72,14 +73,17 @@ public class RadarWindow extends JFrame implements Observer {
 
 	/** Insert game logic here */
 	protected void update() {
-		Vector2D arrowDir = generateArrowDirection().scale(timeDelta *0.1);
-		p1.setPos(p1.getPos().add(arrowDir));
+		space.moveAll();
 	}
 	
 	private void updateTimeStamps() {
 		long currentFrameTime = System.nanoTime();
 		timeDelta = (currentFrameTime - lastFrameTime) * 0.000001;
 		lastFrameTime = currentFrameTime;
+	}
+	
+	public static double getTimeDelta(){
+		return timeDelta;
 	}
 	
 	@Override
@@ -89,31 +93,19 @@ public class RadarWindow extends JFrame implements Observer {
 	}
 	
 	private void generateShips() {
-		p1 = new PlayerShip();
-//		Ship p2 = new PlayerShip();
-//		Ship p3 = new PlayerShip();
+		p1 = new PlayerShip(keyboardStateListener);
+		Ship p2 = new DrunkenShip();
+		Ship p3 = new DrunkenShip();
 		p1.setPos(new Vector2D(50, 40));
-//		p2.setPos(new Vector2D(20, 250));
-//		p3.setPos(new Vector2D(100, 100));
+		p2.setPos(new Vector2D(20, 250));
+		p3.setPos(new Vector2D(100, 100));
 		p1.setAngle(0);
-//		p2.setAngle(0);
-//		p3.setAngle(0);
+		p2.setAngle(0);
+		p3.setAngle(0);
 		space.spawnShip(p1);
-//		space.spawnShip(p2);
-//		space.spawnShip(p3);
+		space.spawnShip(p2);
+		space.spawnShip(p3);
 	}
 	
-	private Vector2D generateArrowDirection() {
-		float vert = 0;
-		float hori = 0;
-		if(keyboardStateListener.getArrowUp())
-			vert--;
-		if(keyboardStateListener.getArrowDown())
-			vert++;
-		if(keyboardStateListener.getArrowRight())
-			hori++;
-		if(keyboardStateListener.getArrowLeft())
-			hori--;
-		return new Vector2D(hori, vert);
-	}
+	
 }
