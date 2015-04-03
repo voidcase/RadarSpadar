@@ -78,9 +78,8 @@ public class RenderPanel extends JPanel {
 		g2.fill(getBounds());
 		
 		g2.setColor(gridColor);
-		
-		Vector2D relpos = new Vector2D(gridSpace, gridSpace).add(following.getPos().scale(-1));
-		grid.translate((float)relpos.getX(), (float)relpos.getY());
+		Vector2D shift = following.getVel().scale(-10);
+		grid.translate((float)shift.getX(), (float)shift.getY());
 		
 		Vector2D[] horizontalStartVectors = grid.getHorizontalStartVectors();
 		Vector2D[] horizontalEndVectors = grid.getHorizontalEndVectors();
@@ -100,6 +99,7 @@ public class RenderPanel extends JPanel {
 			int y2 = (int) verticalEndVectors[i].getY();
 			g2.drawLine(x, y1, x, y2);
 		}
+//		System.out.println("horizontalStartVectors[0].getX() = " + horizontalStartVectors[0].getX());
 	}
 	
 	public void redrawGrid() {

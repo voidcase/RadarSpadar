@@ -35,6 +35,10 @@ public abstract class Ship {
 	public void burn(int amount){
 		//vel.add(dir);
 	}
+	
+	public Vector2D getVel() {
+		return vel;
+	}
 
 	public String toString(){
 		return name;
