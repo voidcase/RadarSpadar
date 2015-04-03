@@ -16,10 +16,12 @@ public class RenderPanel extends JPanel {
 	private boolean debugging = true;
 	private double secondsSinceFPSRender;
 	private double fps;
+	private Ship following;
 	
-	public RenderPanel(Space space) {
+	public RenderPanel(Space space, Ship sh) {
 		super();
 		this.space = space;
+		following = sh;
 		secondsSinceFPSRender = System.nanoTime() * Math.pow(10, -15);;
 	}
 	

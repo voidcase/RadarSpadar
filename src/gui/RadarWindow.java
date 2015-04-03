@@ -29,7 +29,11 @@ public class RadarWindow extends JFrame {
 
 		this.space = space;
 		generateShips();
-		renderPanel = new RenderPanel(space);
+		Ship p1 = new PlayerShip(keyboardStateListener);
+		p1.setPos(new Vector2D(50, 40));
+		space.spawnShip(p1);
+
+		renderPanel = new RenderPanel(space,p1);
 		renderPanel.setBounds(0, 0, 500, 700);
 		add(renderPanel);
 		
@@ -74,18 +78,15 @@ public class RadarWindow extends JFrame {
 	}
 	
 	private void generateShips() {
-		Ship p1 = new PlayerShip(keyboardStateListener);
+		
 		Ship p2 = new DrunkenShip();
 		Ship p3 = new DrunkenShip();
 		Ship st = new Station();
-		p1.setPos(new Vector2D(50, 40));
 		p2.setPos(new Vector2D(20, 250));
 		p3.setPos(new Vector2D(100, 100));
 		st.setPos(new Vector2D(300,100));
-		p1.setAngle(0);
 		p2.setAngle(0);
 		p3.setAngle(0);
-		space.spawnShip(p1);
 		space.spawnShip(p2);
 		space.spawnShip(p3);
 		space.spawnShip(st);
