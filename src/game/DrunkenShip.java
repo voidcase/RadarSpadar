@@ -6,9 +6,9 @@ public class DrunkenShip extends Ship {
 		name = "[drunk]";
 	}
 	@Override
-	public void move() {
+	public void act() {
 		// TODO Auto-generated method stub
-		pos = pos.add(new Vector2D((Math.random()*2)-1,(Math.random()*2)-1).normalize());
+		vel = vel.add(new Vector2D((Math.random()*2)-1,(Math.random()*2)-1).normalize().scale(0.01));
 	}
 	
 }
