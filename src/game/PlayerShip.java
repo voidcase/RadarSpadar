@@ -8,7 +8,9 @@ import datastructures.KeyboardStateListener;
 
 public class PlayerShip extends Ship implements Observer{
 	
-	KeyboardStateListener keyboard;
+	private KeyboardStateListener keyboard;
+	
+	private boolean inertia = false;
 	
 	public PlayerShip(KeyboardStateListener ksl){
 		name = "♠";
@@ -29,7 +31,12 @@ public class PlayerShip extends Ship implements Observer{
 		KeyEvent e = (KeyEvent)arg1;
 		//TOGGLE INERTIA THRUSERS
 		if (e.getKeyCode() == KeyEvent.VK_T){
-			System.out.println("toggle thrusters here!");
+			inertia = !inertia;
+			System.out.print("Inertia thrusters : ");
+			if(inertia)
+				System.out.println("activated");
+			else
+				System.out.println("deactivated");
 		}
 				
 	}
