@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 import java.util.Observable;
 import java.util.Observer;
 
-import gui.RadarWindow;
 import datastructures.KeyboardStateListener;
 
 public class PlayerShip extends Ship implements Observer{
@@ -14,6 +13,7 @@ public class PlayerShip extends Ship implements Observer{
 	public PlayerShip(KeyboardStateListener ksl){
 		name = "♠";
 		keyboard = ksl;
+		ksl.addObserver(this);
 	}
 
 	@Override
@@ -27,5 +27,10 @@ public class PlayerShip extends Ship implements Observer{
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
 		KeyEvent e = (KeyEvent)arg1;
+		//TOGGLE INERTIA THRUSERS
+		if (e.getKeyCode() == KeyEvent.VK_T){
+			System.out.println("toggle thrusters here!");
+		}
+				
 	}
 }

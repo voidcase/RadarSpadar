@@ -34,8 +34,10 @@ public class KeyboardStateListener extends Observable implements KeyListener {
 			arrowRight = false;
 		else if(e.getKeyCode() == KeyEvent.VK_LEFT)
 			arrowLeft = false;
-		else
+		else{
+			setChanged();
 			notifyObservers(e);
+		}
 	}
 	
 	public Vector2D generateArrowDirection() {
