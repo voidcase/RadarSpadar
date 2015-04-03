@@ -50,4 +50,13 @@ public class Vector2D {
 		double ry = y/Math.sqrt(x*x + y*y);
 		return new Vector2D(rx,ry);
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Vector2D) {
+			Vector2D v = (Vector2D) o;
+			return x == v.x && y == v.y;
+		}
+		return false;
+	}
 }
