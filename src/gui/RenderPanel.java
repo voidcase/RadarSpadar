@@ -37,12 +37,12 @@ public class RenderPanel extends JPanel {
 				secondsSinceFPSRender = 0;
 			}
 			g2.setColor(Color.magenta);
-			g2.setFont(new Font("Consolas", Font.PLAIN, 20));
-			g2.drawString(fps + "FPS", 0, 20);
+			g2.setFont(new Font("Consolas", Font.PLAIN, 12));
+			g2.drawString(fps + "FPS", 0, 12);
 		}
 		
 		g2.setColor(Color.green);
-		g2.setFont(new Font("Consolas", Font.PLAIN, 20));
+		g2.setFont(new Font("Consolas", Font.PLAIN, 12));
 		for(Ship ship : ships) {
 			g2.rotate(ship.getAngle());
 			g2.drawString(ship.toString(), (float)ship.getPos().getX(), (float)ship.getPos().getY());
