@@ -20,7 +20,6 @@ public class RadarWindow extends JFrame {
 	private KeyboardStateListener keyboardStateListener;
 	private RenderPanel renderPanel;
 	private Space space;
-	private Ship p1;
 	
 	public RadarWindow(Space space) {
 		super("Radar Window");
@@ -73,7 +72,7 @@ public class RadarWindow extends JFrame {
 	}
 	
 	private void generateShips() {
-		p1 = new PlayerShip(keyboardStateListener);
+		Ship p1 = new PlayerShip(keyboardStateListener);
 		Ship p2 = new DrunkenShip();
 		Ship p3 = new DrunkenShip();
 		p1.setPos(new Vector2D(50, 40));
