@@ -55,9 +55,15 @@ public class RadarWindow extends JFrame implements Observer {
 			public void run() {
 				lastFrameTime = System.nanoTime();
 				while(!isInterrupted()) {
-					updateTimeStamps();
-					update();
-					renderPanel.repaint();
+					try {
+						updateTimeStamps();
+						update();
+						renderPanel.repaint();
+						sleep(1000 * 1/60);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		};

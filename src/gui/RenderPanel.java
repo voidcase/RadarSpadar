@@ -32,7 +32,7 @@ public class RenderPanel extends JPanel {
 		
 		if(debugging) {
 			secondsSinceFPSRender += System.nanoTime() * Math.pow(10, -12);
-			if(secondsSinceFPSRender > 50000) {
+			if(secondsSinceFPSRender > 5000) {
 				fps = RadarWindow.getFPS();
 				secondsSinceFPSRender = 0;
 			}
