@@ -3,7 +3,7 @@ package datastructures;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class ArrowKeyListener implements KeyListener {
+public class KeyboardStateListener implements KeyListener {
 	private boolean arrowUp = false;
 	private boolean arrowDown = false;
 	private boolean arrowRight = false;
