@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -16,6 +17,7 @@ import javax.swing.JPanel;
 public class RenderPanel extends JPanel {
 	private Space space;
 	private boolean debugging = true;
+	private boolean antialias = true;
 	private double secondsSinceFPSRender;
 	private double fps;
 	private Ship following;
@@ -30,6 +32,14 @@ public class RenderPanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
+		
+		if(antialias){
+			RenderingHints rh = new RenderingHints(
+					RenderingHints.KEY_TEXT_ANTIALIASING,
+					RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			g2.setRenderingHints(rh);
+		}
+		
 		List<Ship> ships = space.getShipList();
 		g2.setColor(Color.black);
 		g2.fill(getBounds());

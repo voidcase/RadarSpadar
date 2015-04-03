@@ -4,29 +4,13 @@ import game.Vector2D;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Observable;
 
-public class KeyboardStateListener implements KeyListener {
+public class KeyboardStateListener extends Observable implements KeyListener {
 	private boolean arrowUp = false;
 	private boolean arrowDown = false;
 	private boolean arrowRight = false;
 	private boolean arrowLeft = false;
-	
-	public boolean getArrowUp() {
-		return arrowUp;
-	}
-
-	public boolean getArrowDown() {
-		return arrowDown;
-	}
-
-	public boolean getArrowRight() {
-		return arrowRight;
-	}
-
-	public boolean getArrowLeft() {
-		return arrowLeft;
-	}
-
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -44,12 +28,16 @@ public class KeyboardStateListener implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_UP)
 			arrowUp = false;
-		if(e.getKeyCode() == KeyEvent.VK_DOWN)
+		else if(e.getKeyCode() == KeyEvent.VK_DOWN)
 			arrowDown = false;
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+		else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
 			arrowRight = false;
-		if(e.getKeyCode() == KeyEvent.VK_LEFT)
+		else if(e.getKeyCode() == KeyEvent.VK_LEFT)
 			arrowLeft = false;
+		else{
+			setChanged();
+			notifyObservers(e);
+		}
 	}
 	
 	public Vector2D generateArrowDirection() {
