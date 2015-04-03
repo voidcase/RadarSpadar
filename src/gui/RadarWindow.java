@@ -4,6 +4,7 @@ import game.DrunkenShip;
 import game.PlayerShip;
 import game.Ship;
 import game.Space;
+import game.Station;
 import game.Vector2D;
 
 import java.awt.event.ComponentEvent;
@@ -76,15 +77,18 @@ public class RadarWindow extends JFrame {
 		Ship p1 = new PlayerShip(keyboardStateListener);
 		Ship p2 = new DrunkenShip();
 		Ship p3 = new DrunkenShip();
+		Ship st = new Station();
 		p1.setPos(new Vector2D(50, 40));
 		p2.setPos(new Vector2D(20, 250));
 		p3.setPos(new Vector2D(100, 100));
+		st.setPos(new Vector2D(300,100));
 		p1.setAngle(0);
 		p2.setAngle(0);
 		p3.setAngle(0);
 		space.spawnShip(p1);
 		space.spawnShip(p2);
 		space.spawnShip(p3);
+		space.spawnShip(st);
 	}
 	
 	// TODO add a better fucking name...
