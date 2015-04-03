@@ -8,7 +8,7 @@ public class PlayerShip extends Ship {
 	KeyboardStateListener keyboard;
 	
 	public PlayerShip(KeyboardStateListener ksl){
-		name = "[player]";
+		name = "♠";
 		keyboard = ksl;
 	}
 
