@@ -108,6 +108,7 @@ public class RadarWindow extends JFrame {
 		@Override
 		public void componentResized(ComponentEvent e) {
 			renderPanel.setSize(getSize());
+			renderPanel.redrawGrid();
 		}
 
 		@Override
