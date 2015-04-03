@@ -34,11 +34,11 @@ public class RadarWindow extends JFrame {
 		space.spawnShip(p1);
 
 		renderPanel = new RenderPanel(space,p1);
-		renderPanel.setBounds(0, 0, 500, 700);
+		renderPanel.setLocation(0,0);
 		add(renderPanel);
 		
 		addComponentListener(new AComponentListener());
-		setSize(500, 700);
+		setSize(1100, 800);
 		setLayout(null);	//ensures that absolute positioning is possible
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
