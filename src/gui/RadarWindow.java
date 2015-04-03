@@ -5,6 +5,7 @@ import game.Ship;
 import game.Space;
 import game.Vector2D;
 
+import java.awt.Color;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -32,8 +33,9 @@ public class RadarWindow extends JFrame implements Observer {
 		addKeyListener(arrowKeyListener);
 
 		placeholder = new JLabel("asd");
-		placeholder.setBounds(100, 100, 25, 45);
-		phPos = new Vector2D(placeholder.getBounds().getX(), placeholder.getBounds().getY());
+		placeholder.setSize(25,45);
+		placeholder.setLocation(100, 100);
+		phPos = new Vector2D(placeholder.getLocation().getX(), placeholder.getLocation().getY());
 		add(placeholder);
 
 		space = new Space();
@@ -48,6 +50,50 @@ public class RadarWindow extends JFrame implements Observer {
 		setVisible(true);
 		initLoop();
 		space.addObserver(this);	//fast varför observar vi egentligen space?
+	}
+	
+	private void initLoop() {
+		Thread loopUpdate = new Thread() {
+			@Override
+			public void run() {
+				lastFrameTime = System.currentTimeMillis();
+				while(!isInterrupted()) {
+					try {
+						updateTimeStamps();
+						update();
+						renderPanel.repaint();
+						sleep(1000 * (1/60));
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		loopUpdate.start();
+	}
+
+	/** Insert game logic here */
+	protected void update() {
+		Vector2D arrowDir = generateArrowDirection();
+		arrowDir = arrowDir.scale(timeDelta * 0.1);
+		
+		// Section: example of some logic that moves a label around
+		phPos = phPos.add(arrowDir);
+		placeholder.setLocation((int) phPos.getX(), (int) phPos.getY());
+		
+		rotateP1();
+	}
+	
+	private void updateTimeStamps() {
+		long currentFrameTime = System.currentTimeMillis();
+		timeDelta = currentFrameTime - lastFrameTime;
+		lastFrameTime = currentFrameTime;
+	}
+	
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		updateTimeStamps();
+		update();
 	}
 	
 	private void generateShips(Space space) {
@@ -65,51 +111,6 @@ public class RadarWindow extends JFrame implements Observer {
 		space.spawnShip(p3);
 	}
 	
-	
-	private void initLoop() {
-		Thread loopUpdate = new Thread() {
-			@Override
-			public void run() {
-				lastFrameTime = System.currentTimeMillis();
-				while(!isInterrupted()) {
-					try {
-						updateTimeStamps();
-						update();
-						sleep(1000 * (1/60));
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		};
-		loopUpdate.start();
-	}
-	
-	private void updateTimeStamps() {
-		long currentFrameTime = System.currentTimeMillis();
-		timeDelta = currentFrameTime - lastFrameTime;
-		lastFrameTime = currentFrameTime;
-	}
-	
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		updateTimeStamps();
-		update();
-	}
-	
-	/** Insert game logic here */
-	protected void update() {
-		Vector2D arrowDir = generateArrowDirection();
-		arrowDir = arrowDir.scale(timeDelta * 0.1);
-		
-		// Section: example of some logic that moves a label around
-		phPos = phPos.add(arrowDir);
-		placeholder.setBounds((int) phPos.getX(), (int) phPos.getY(),
-				placeholder.getBounds().width, placeholder.getBounds().height);
-		
-		rotateP1();
-	}
-	
 	private Vector2D generateArrowDirection() {
 		float vert = 0;
 		float hori = 0;
@@ -121,19 +122,19 @@ public class RadarWindow extends JFrame implements Observer {
 			hori++;
 		if(arrowKeyListener.getArrowLeft())
 			hori--;
-		if(hori != 0 && vert != 0)
-			System.out.println("hori = " + hori + " vert = " + vert);
+//		if(hori != 0 && vert != 0)
+//			System.out.println("hori = " + hori + " vert = " + vert);
 		return new Vector2D(hori, vert);
 	}
 	
 	private void rotateP1() {
 		double angle = p1.getAngle();
-		double rotationSpeed = 10.0 * timeDelta;
+		double rotationSpeed = 0.0002 * timeDelta;
 		if (arrowKeyListener.getEPressed())
 			angle += rotationSpeed;
 		if (arrowKeyListener.getQPressed())
 			angle -= rotationSpeed;
 		p1.setAngle(angle);
-		System.out.println("ePressed = " + arrowKeyListener.getEPressed() + "\nqPressed = " + arrowKeyListener.getQPressed());
+//		System.out.println("ePressed = " + arrowKeyListener.getEPressed() + "\nqPressed = " + arrowKeyListener.getQPressed());
 	}
 }

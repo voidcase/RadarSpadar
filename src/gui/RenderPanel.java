@@ -24,6 +24,7 @@ public class RenderPanel extends JPanel {
 		Graphics2D g2 = (Graphics2D) g;
 		List<Ship> ships = space.getShipList();
 		g2.setBackground(Color.black);
+		g2.fill(getBounds());
 		
 		g2.setColor(Color.green);
 		g2.setFont(new Font("Consolas", Font.PLAIN, 20));
