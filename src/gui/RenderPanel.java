@@ -20,7 +20,7 @@ public class RenderPanel extends JPanel {
 	public RenderPanel(Space space) {
 		super();
 		this.space = space;
-		secondsSinceFPSRender = System.nanoTime() * Math.pow(10, -12);;
+		secondsSinceFPSRender = System.nanoTime() * Math.pow(10, -15);;
 	}
 	
 	@Override
@@ -31,9 +31,9 @@ public class RenderPanel extends JPanel {
 		g2.fill(getBounds());
 		
 		if(debugging) {
-			secondsSinceFPSRender += System.nanoTime() * Math.pow(10, -12);
-			if(secondsSinceFPSRender > 500) {
-				fps = RadarWindow.getFPS();
+			secondsSinceFPSRender += System.nanoTime() * Math.pow(10, -15);
+			if(secondsSinceFPSRender > 0.5) {
+				fps = 1000/RadarWindow.getTimeDelta();
 				secondsSinceFPSRender = 0;
 			}
 			g2.setColor(Color.magenta);

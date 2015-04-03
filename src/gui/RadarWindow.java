@@ -13,20 +13,11 @@ import javax.swing.JFrame;
 
 import datastructures.KeyboardStateListener;
 
-public class RadarWindow extends JFrame implements Observer {
+public class RadarWindow extends JFrame {
 	/** difference of time between frames, in milliseconds*/
 	protected static double timeDelta;
-	public static double getFPS() {
-		if (timeDelta != 0)
-			return 1/(timeDelta*0.001);
-		else
-			return -1;
-	}
-	
 	private static final long serialVersionUID = -8212981428372798858L;
 	private KeyboardStateListener keyboardStateListener;
-	/** timestamp from when the last frame started rendering, in nanoseconds*/
-	private long lastFrameTime;
 	private RenderPanel renderPanel;
 	private Space space;
 	private Ship p1;
@@ -47,22 +38,23 @@ public class RadarWindow extends JFrame implements Observer {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		initLoop();
-		space.addObserver(this);	//fast varför observar vi egentligen space?
 	}
 	
 	private void initLoop() {
 		Thread loopUpdate = new Thread() {
 			@Override
 			public void run() {
+				long currentFrameTime, lastFrameTime;
 				lastFrameTime = System.nanoTime();
 				while(!isInterrupted()) {
+					currentFrameTime = System.nanoTime();
+					timeDelta = (currentFrameTime - lastFrameTime) * 0.000001;
+					lastFrameTime = currentFrameTime;
+					update();
+					renderPanel.repaint();
 					try {
-						updateTimeStamps();
-						update();
-						renderPanel.repaint();
 						sleep(1000 * 1/60);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -76,20 +68,8 @@ public class RadarWindow extends JFrame implements Observer {
 		space.moveAll();
 	}
 	
-	private void updateTimeStamps() {
-		long currentFrameTime = System.nanoTime();
-		timeDelta = (currentFrameTime - lastFrameTime) * 0.000001;
-		lastFrameTime = currentFrameTime;
-	}
-	
 	public static double getTimeDelta(){
 		return timeDelta;
-	}
-	
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		updateTimeStamps();
-		update();
 	}
 	
 	private void generateShips() {
