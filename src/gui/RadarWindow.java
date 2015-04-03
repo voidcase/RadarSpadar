@@ -47,6 +47,7 @@ public class RadarWindow extends JFrame implements Observer {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		initLoop();
+		space.addObserver(this);	//fast varför observar vi egentligen space?
 	}
 	
 	private void generateShips(Space space) {
