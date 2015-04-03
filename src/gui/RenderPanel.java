@@ -31,7 +31,7 @@ public class RenderPanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		List<Ship> ships = space.getShipList();
-		g2.setBackground(Color.black);
+		g2.setColor(Color.black);
 		g2.fill(getBounds());
 		
 		if(debugging) {
