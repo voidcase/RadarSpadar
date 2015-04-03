@@ -8,6 +8,11 @@ public class Vector2D {
 		this.y = y;
     }
     
+    public void setPos(Vector2D newPos) {
+    	this.x = newPos.x;
+		this.y = newPos.y;
+    }
+    
     public void setX(double x) {
 		this.x = x;
     }
