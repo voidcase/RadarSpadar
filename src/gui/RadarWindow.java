@@ -12,15 +12,14 @@ import java.util.Observer;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import datastructures.ArrowKeyListener;
+import datastructures.KeyboardStateListener;
 
 public class RadarWindow extends JFrame implements Observer {
 	protected long timeDelta;
 	
 	private static final long serialVersionUID = -8212981428372798858L;
-	private ArrowKeyListener arrowKeyListener;
+	private KeyboardStateListener keyboardStateListener;
 	private long lastFrameTime;
-	private JLabel placeholder;
 	private RenderPanel renderPanel;
 	private Space space;
 	private Ship p1;
@@ -29,14 +28,8 @@ public class RadarWindow extends JFrame implements Observer {
 	
 	public RadarWindow(Space space) {
 		super("Radar Window");
-		arrowKeyListener = new ArrowKeyListener();
-		addKeyListener(arrowKeyListener);
-
-		placeholder = new JLabel("asd");
-		placeholder.setSize(25,45);
-		placeholder.setLocation(100, 100);
-		phPos = new Vector2D(placeholder.getLocation().getX(), placeholder.getLocation().getY());
-		add(placeholder);
+		keyboardStateListener = new KeyboardStateListener();
+		addKeyListener(keyboardStateListener);
 
 		space = new Space();
 		generateShips(space);
@@ -79,9 +72,6 @@ public class RadarWindow extends JFrame implements Observer {
 		
 		// Section: example of some logic that moves a label around
 		phPos = phPos.add(arrowDir);
-		placeholder.setLocation((int) phPos.getX(), (int) phPos.getY());
-		
-		rotateP1();
 	}
 	
 	private void updateTimeStamps() {
@@ -114,13 +104,13 @@ public class RadarWindow extends JFrame implements Observer {
 	private Vector2D generateArrowDirection() {
 		float vert = 0;
 		float hori = 0;
-		if(arrowKeyListener.getArrowUp())
+		if(keyboardStateListener.getArrowUp())
 			vert--;
-		if(arrowKeyListener.getArrowDown())
+		if(keyboardStateListener.getArrowDown())
 			vert++;
-		if(arrowKeyListener.getArrowRight())
+		if(keyboardStateListener.getArrowRight())
 			hori++;
-		if(arrowKeyListener.getArrowLeft())
+		if(keyboardStateListener.getArrowLeft())
 			hori--;
 //		if(hori != 0 && vert != 0)
 //			System.out.println("hori = " + hori + " vert = " + vert);
@@ -130,9 +120,9 @@ public class RadarWindow extends JFrame implements Observer {
 	private void rotateP1() {
 		double angle = p1.getAngle();
 		double rotationSpeed = 0.0002 * timeDelta;
-		if (arrowKeyListener.getEPressed())
+		if (keyboardStateListener.getEPressed())
 			angle += rotationSpeed;
-		if (arrowKeyListener.getQPressed())
+		if (keyboardStateListener.getQPressed())
 			angle -= rotationSpeed;
 		p1.setAngle(angle);
 //		System.out.println("ePressed = " + arrowKeyListener.getEPressed() + "\nqPressed = " + arrowKeyListener.getQPressed());
