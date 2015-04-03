@@ -53,7 +53,7 @@ public class RadarWindow extends JFrame {
 					update();
 					renderPanel.repaint();
 					try {
-						sleep(1000 * 1/60);
+						sleep(1000 * 1/60);	//this maintains a max of 60fps... aaaand stops isaks laptop from lagging. dunno why :S
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
