@@ -13,8 +13,6 @@ public class Grid {
 	private float xEnd;
 	private float yStart;
 	private float yEnd;
-	private int nrOfHoriLines;
-	private int nrOfVertLines;
 	
 	public Grid(int gridSpace, int screenWidth, int screenHeight) {
 		int nrOfHoriLines = screenWidth/gridSpace + 2*buffer;
@@ -43,6 +41,7 @@ public class Grid {
 		}
 	}
 	
+	
 	public void translate(float dx, float dy) {
 		float newXStart = (xStart + dx) % (-gridSpace);
 		float newYStart = (yStart + dy) % (-gridSpace);
@@ -52,16 +51,17 @@ public class Grid {
 		xStart += dx;
 		xEnd += dx;
 		Vector2D shiftVector = new Vector2D(dx, dy);
-		for (int i = 0; i < nrOfHoriLines; i++) {
-			horizontalStartVectors[i].add(shiftVector);
-			horizontalEndVectors[i].add(shiftVector);
+//		System.out.println("shiftVector.getX() = " + shiftVector.getX() + " shiftVector.getY() = " + shiftVector.getY());
+		for (int i = 0; i < horizontalStartVectors.length; i++) {
+			horizontalStartVectors[i] = horizontalStartVectors[i].add(shiftVector);
+			horizontalEndVectors[i] = horizontalEndVectors[i].add(shiftVector);
 		}
 		
 		yStart += dy;
 		yEnd += dy;
-		for (int i = 0; i < nrOfVertLines; i++) {
-			verticalStartVectors[i].add(shiftVector);
-			verticalEndVectors[i].add(shiftVector);
+		for (int i = 0; i < verticalStartVectors.length; i++) {
+			verticalStartVectors[i] = verticalStartVectors[i].add(shiftVector);
+			verticalEndVectors[i] = verticalEndVectors[i].add(shiftVector);
 		}
 	}
 	
