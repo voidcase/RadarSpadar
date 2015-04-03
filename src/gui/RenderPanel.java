@@ -41,7 +41,7 @@ public class RenderPanel extends JPanel {
 		}
 		
 		List<Ship> ships = space.getShipList();
-		g2.setBackground(Color.black);
+		g2.setColor(Color.black);
 		g2.fill(getBounds());
 		
 		if(debugging) {
@@ -59,18 +59,11 @@ public class RenderPanel extends JPanel {
 		g2.setFont(new Font("Consolas", Font.PLAIN, 12));
 		float centerX = (float) getSize().getWidth()/2;
 		float centerY = (float) getSize().getHeight()/2;
-//		System.out.println("centerX = " + center);
 		for(Ship ship : ships) {
 			Vector2D relpos = ship.getPos().add(following.getPos().scale(-1));
 			g2.drawString(ship.toString(), 
 					centerX + (float)relpos.getX(), 
 					centerY + (float)relpos.getY());
 		}
-	}
-	
-	private Dimension getScreenCenter() {
-		int centerX = (int) getPreferredSize().getWidth()/2;
-		int centerY = (int) getPreferredSize().getHeight()/2;
-		return new Dimension(centerX, centerY);
 	}
 }
