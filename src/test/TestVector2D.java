@@ -13,5 +13,12 @@ public class TestVector2D {
 		Vector2D expected = new Vector2D(3/5, 4/5);
 		assertEquals(expected, v);
 	}
+	
+	@Test
+	public void testEquals() {
+		Vector2D v = new Vector2D(1,1);
+		Vector2D expected = new Vector2D(1,1);
+		assertEquals(expected, v);
+	}
 
 }
