@@ -31,7 +31,7 @@ public class Space extends Observable {
 	
 	public void moveAll(){
 		for(Ship s : ships){
-			s.move();
+			s.update();
 		}
 	}
 }

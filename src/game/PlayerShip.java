@@ -13,9 +13,9 @@ public class PlayerShip extends Ship {
 	}
 
 	@Override
-	public void move() {
+	public void act() {
 		// TODO Auto-generated method stub
-		Vector2D arrowDir = keyboard.generateArrowDirection().scale(RadarWindow.getTimeDelta()*0.1);
-		pos = pos.add(arrowDir);
+		Vector2D arrowDir = keyboard.generateArrowDirection().scale(0.01);
+		vel = vel.add(arrowDir);
 	}
 }
