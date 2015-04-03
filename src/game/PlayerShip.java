@@ -23,6 +23,9 @@ public class PlayerShip extends Ship implements Observer{
 		// TODO Auto-generated method stub
 		Vector2D arrowDir = keyboard.generateArrowDirection().scale(0.01);
 		vel = vel.add(arrowDir);
+		if(inertia){
+			vel = vel.add(vel.scale(-0.05));
+		}
 	}
 
 	@Override
@@ -32,6 +35,7 @@ public class PlayerShip extends Ship implements Observer{
 		//TOGGLE INERTIA THRUSERS
 		if (e.getKeyCode() == KeyEvent.VK_T){
 			inertia = !inertia;
+			
 			System.out.print("Inertia thrusters : ");
 			if(inertia)
 				System.out.println("activated");
