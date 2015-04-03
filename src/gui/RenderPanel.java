@@ -4,6 +4,7 @@ import game.Ship;
 import game.Space;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -46,9 +47,13 @@ public class RenderPanel extends JPanel {
 		g2.setColor(Color.green);
 		g2.setFont(new Font("Consolas", Font.PLAIN, 12));
 		for(Ship ship : ships) {
-			g2.rotate(ship.getAngle());
 			g2.drawString(ship.toString(), (float)ship.getPos().getX(), (float)ship.getPos().getY());
-			g2.rotate(-ship.getAngle());
 		}
-	}	
+	}
+	
+	private Dimension getScreenCenter() {
+		int centerX = (int) getPreferredSize().getWidth()/2;
+		int centerY = (int) getPreferredSize().getHeight()/2;
+		return new Dimension(centerX, centerY);
+	}
 }
