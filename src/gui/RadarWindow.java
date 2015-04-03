@@ -5,12 +5,10 @@ import game.Ship;
 import game.Space;
 import game.Vector2D;
 
-import java.awt.Color;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import datastructures.KeyboardStateListener;
 
@@ -23,8 +21,6 @@ public class RadarWindow extends JFrame implements Observer {
 	private RenderPanel renderPanel;
 	private Space space;
 	private Ship p1;
-	
-	private Vector2D phPos;
 	
 	public RadarWindow(Space space) {
 		super("Radar Window");
@@ -67,11 +63,8 @@ public class RadarWindow extends JFrame implements Observer {
 
 	/** Insert game logic here */
 	protected void update() {
-		Vector2D arrowDir = generateArrowDirection();
-		arrowDir = arrowDir.scale(timeDelta * 0.1);
-		
-		// Section: example of some logic that moves a label around
-		phPos = phPos.add(arrowDir);
+		Vector2D arrowDir = generateArrowDirection().scale(timeDelta * 0.1);
+		p1.setPos(p1.getPos().add(arrowDir));
 	}
 	
 	private void updateTimeStamps() {
@@ -112,19 +105,6 @@ public class RadarWindow extends JFrame implements Observer {
 			hori++;
 		if(keyboardStateListener.getArrowLeft())
 			hori--;
-//		if(hori != 0 && vert != 0)
-//			System.out.println("hori = " + hori + " vert = " + vert);
 		return new Vector2D(hori, vert);
-	}
-	
-	private void rotateP1() {
-		double angle = p1.getAngle();
-		double rotationSpeed = 0.0002 * timeDelta;
-		if (keyboardStateListener.getEPressed())
-			angle += rotationSpeed;
-		if (keyboardStateListener.getQPressed())
-			angle -= rotationSpeed;
-		p1.setAngle(angle);
-//		System.out.println("ePressed = " + arrowKeyListener.getEPressed() + "\nqPressed = " + arrowKeyListener.getQPressed());
 	}
 }
