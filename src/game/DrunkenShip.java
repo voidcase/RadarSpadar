@@ -3,7 +3,7 @@ package game;
 public class DrunkenShip extends Ship {
 
 	public DrunkenShip(){
-		name = "[drunk]";
+		name = "* DRUNK";
 	}
 	@Override
 	public void act() {

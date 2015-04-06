@@ -13,7 +13,7 @@ public class PlayerShip extends Ship implements Observer{
 	private boolean inertia = false;
 	
 	public PlayerShip(KeyboardStateListener ksl){
-		name = "♠";
+		name = "^";
 		keyboard = ksl;
 		ksl.addObserver(this);
 	}

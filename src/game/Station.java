@@ -3,7 +3,7 @@ package game;
 public class Station extends Ship {
 	
 	public Station(){
-		name = 	"[STATION]";
+		name = 	"* STATION";
 	}
 	@Override
 	public void act() {
