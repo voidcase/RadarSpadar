@@ -32,6 +32,10 @@ public class Vector2D {
     public double distance(Vector2D other){
     	return Math.sqrt(Math.pow(x-other.x,2) + Math.pow(y-other.y,2));
     }
+    
+    public Vector2D distanceVectorTo(Vector2D other){
+    	return scale(-1).add(other);
+    }
 
 	public Vector2D add(Vector2D vector) {
 		double rx = x + vector.x;

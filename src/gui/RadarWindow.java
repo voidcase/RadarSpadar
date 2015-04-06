@@ -1,16 +1,16 @@
 package gui;
 
-import game.DrunkenShip;
-import game.PlayerShip;
-import game.Ship;
-import game.Space;
-import game.Station;
-import game.Vector2D;
+import game.*;
 
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.JFrame;
+
+import sun.audio.*;
 
 import datastructures.KeyboardStateListener;
 
@@ -30,7 +30,7 @@ public class RadarWindow extends JFrame {
 		this.space = space;
 		generateShips();
 		Ship p1 = new PlayerShip(keyboardStateListener);
-		p1.setPos(new Vector2D(50, 40));
+		p1.setPos(new Vector2D(0, 0));
 		space.spawnShip(p1);
 
 		renderPanel = new RenderPanel(space,p1);
@@ -82,14 +82,17 @@ public class RadarWindow extends JFrame {
 		Ship p2 = new DrunkenShip();
 		Ship p3 = new DrunkenShip();
 		Ship st = new Station();
+		Ship gw = new GravityWell(1,space);
 		p2.setPos(new Vector2D(20, 250));
 		p3.setPos(new Vector2D(100, 100));
 		st.setPos(new Vector2D(300,100));
+		gw.setPos(new Vector2D(-300,-300));
 		p2.setAngle(0);
 		p3.setAngle(0);
 		space.spawnShip(p2);
 		space.spawnShip(p3);
 		space.spawnShip(st);
+		space.spawnShip(gw);
 	}
 	
 	// TODO add a better fucking name...
