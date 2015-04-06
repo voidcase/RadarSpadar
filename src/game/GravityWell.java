@@ -12,7 +12,7 @@ public class GravityWell extends Ship {
 	
 	@Override
 	public void act() {
-		for(Ship s: environment.scan(pos,mass*1000)){
+		for(Ship s: environment.scan(pos,1000)){
 			if(!s.equals(this)){
 				s.vel = s.vel.add(s.pos.distanceVectorTo(pos).normalize().scale(mass/pos.distance(s.pos)));
 			}
