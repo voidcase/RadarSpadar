@@ -18,4 +18,14 @@ public class GravityWell extends Ship {
 			}
 		}
 	}
+	
+	@Override
+	public boolean equals(Object o ) {
+		if(o instanceof GravityWell) {
+			GravityWell gw = (GravityWell) o;
+			return mass == gw.mass &&
+				   super.equals(o);
+		}
+		return false;
+	}
 }

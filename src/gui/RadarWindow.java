@@ -29,7 +29,7 @@ public class RadarWindow extends JFrame {
 
 		this.space = space;
 		generateShips();
-		Ship p1 = new PlayerShip(keyboardStateListener,space);
+		PlayerShip p1 = new PlayerShip(keyboardStateListener,space);
 		p1.setPos(new Vector2D(0, 0));
 		space.spawnShip(p1);
 

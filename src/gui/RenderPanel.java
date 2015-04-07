@@ -1,5 +1,6 @@
 package gui;
 
+import game.PlayerShip;
 import game.Ship;
 import game.Space;
 import game.Vector2D;
@@ -20,13 +21,14 @@ public class RenderPanel extends JPanel {
 	private Grid grid;
 	private int gridSpace = 50;
 	private Color gridColor = Color.decode("#002600");
+	private Color selectedColor = Color.decode("#00ffff");
 	private boolean debugging = true;
 	private boolean antialias = true;
 	private double secondsSinceFPSRender;
 	private double fps;
-	private Ship following;
+	private PlayerShip following;
 	
-	public RenderPanel(Space space, Ship sh) {
+	public RenderPanel(Space space, PlayerShip sh) {
 		super();
 		this.space = space;
 		following = sh;
@@ -67,9 +69,18 @@ public class RenderPanel extends JPanel {
 		float centerY = (float) getSize().getHeight()/2;
 		for(Ship ship : ships) {
 			Vector2D relpos = ship.getPos().add(following.getPos().scale(-1));
-			g2.drawString(ship.toString(), 
-					centerX + (float)relpos.getX(), 
-					centerY + (float)relpos.getY());
+			Ship target = following.getTarget();
+			if(ship.equals(target)) {
+				g2.setColor(selectedColor);
+				g2.drawString("[[" + ship.toString() + "]]", 
+						centerX + (float)relpos.getX(), 
+						centerY + (float)relpos.getY());
+				g2.setColor(Color.green);
+			} else {
+				g2.drawString(ship.toString(), 
+						centerX + (float)relpos.getX(), 
+						centerY + (float)relpos.getY());
+			}
 		}
 	}
 	
