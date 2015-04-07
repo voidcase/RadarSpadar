@@ -1,15 +1,12 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Observable;
-import java.util.function.Function;
-import java.util.function.ToDoubleFunction;
-import java.util.function.ToIntFunction;
-import java.util.function.ToLongFunction;
 
-public class Space extends Observable {
+public class Space{
 	private List<Ship> ships;
 	
 	public Space(){
@@ -29,7 +26,7 @@ public class Space extends Observable {
 				
 			}
 		}
-		hits.sort(new ProximityComparator(origin));
+		Collections.sort(hits,new ProximityComparator(origin));
 		return hits;
 			
 		}

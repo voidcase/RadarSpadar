@@ -41,7 +41,7 @@ public class PlayerShip extends Ship implements Observer{
 				System.out.println("deactivated");
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_S){
-			System.out.println("Scan report:\n" + space.scan(pos, 1000));
+			System.out.println("Scan report: " + space.scan(pos, 1000));
 		}
 				
 	}
