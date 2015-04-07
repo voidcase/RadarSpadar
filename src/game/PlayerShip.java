@@ -9,11 +9,13 @@ import datastructures.KeyboardStateListener;
 public class PlayerShip extends Ship implements Observer{
 	private KeyboardStateListener keyboard;
 	private boolean inertia = false;
+	private Space space;
 	
-	public PlayerShip(KeyboardStateListener ksl){
+	public PlayerShip(KeyboardStateListener ksl, Space s){
 		name = "^";
 		keyboard = ksl;
 		ksl.addObserver(this);
+		space = s;
 	}
 
 	@Override
@@ -37,6 +39,9 @@ public class PlayerShip extends Ship implements Observer{
 				System.out.println("activated");
 			else
 				System.out.println("deactivated");
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_S){
+			System.out.println("Scan report: " + space.scan(pos, 1000));
 		}
 				
 	}
