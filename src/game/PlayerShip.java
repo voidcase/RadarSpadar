@@ -59,10 +59,21 @@ public class PlayerShip extends Ship implements Observer{
 			else target = NO_TARGET;
 			System.out.println("Scan report: " + hits);
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_R)
-			target = (target + 1) % hits.size(); //like target++; but rotates over to 0 when target == hits.size()
-		else if(e.getKeyCode() == KeyEvent.VK_E)
-			target = (target - 1) % hits.size(); //like target--; but rotates over to 0 when target == hits.size()
-		
+		else if(e.getKeyCode() == KeyEvent.VK_R){
+			if(hits == null || hits.size() == 0){
+				hits = space.scan(pos, 1000);
+				target = 0 % hits.size();
+			}
+			target = Math.abs(target + 1) % hits.size();
+			System.out.println("targetnr = " + target);
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_E){
+			if(hits == null || hits.size() == 0){
+				hits = space.scan(pos, 1000);
+				target = 1 % hits.size();
+			}
+			target = Math.abs(target - 1) % hits.size();
+			System.out.println("dargetnr = " + target);
+		}
 	}
 }
