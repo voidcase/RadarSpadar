@@ -10,12 +10,4 @@ public class DrunkenShip extends Ship {
 		// TODO Auto-generated method stub
 		vel = vel.add(new Vector2D((Math.random()*2)-1,(Math.random()*2)-1).normalize().scale(0.01));
 	}
-	
-	@Override
-	public boolean equals(Object o) {
-		if(o instanceof DrunkenShip) {
-			return super.equals(o);
-		}
-		return false;
-	}
 }
