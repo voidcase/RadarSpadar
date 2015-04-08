@@ -1,8 +1,6 @@
 package game;
 
 public class Vector2D {
-	public static Vector2D ZERO = new Vector2D(0, 0);
-	
     private double x, y;
 
     public Vector2D(double x, double y) {

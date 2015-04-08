@@ -9,6 +9,9 @@ import datastructures.KeyboardStateListener;
 
 public class PlayerShip extends Ship implements Observer{
 	public static int NO_TARGET = -1;
+	public static int RANGE_CLOSE = 200;
+	public static int RANGE_MEDIUM = 400;
+	public static int RANGE_FAR = 800;
 	
 	private KeyboardStateListener keyboard;
 	private boolean inertia = false;
@@ -40,7 +43,7 @@ public class PlayerShip extends Ship implements Observer{
 	}
 	
 	public boolean isMoving() {
-		return !vel.equals(Vector2D.ZERO);
+		return vel.getX() == 0 && vel.getY() == 0;
 	}
 
 	@Override
