@@ -156,8 +156,7 @@ public class RadarWindow extends JFrame {
 	}
 	
 	private void generateUIText(){
-		System.out.println(this.getHeight()-20);
-		uiTexts.add(new UIField(10,90,"Hello!"));
+		uiTexts.add(new UIField(10,90,"Rättvisemärkt snuff!"));
 	}
 	
 	// TODO add a better fucking name...
