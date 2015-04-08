@@ -42,16 +42,4 @@ public abstract class Ship {
 	public String toString(){
 		return name;
 	}
-
-	@Override
-	public boolean equals(Object o ) {
-		if(o instanceof Ship) {
-			Ship s = (Ship) o;
-			return name.equals(s.name) &&
-				   pos.equals(s.pos) &&
-				   angle == s.angle &&
-				   vel.equals(s.vel);
-		}
-		return false;
-	}
 }

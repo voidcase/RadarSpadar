@@ -65,16 +65,4 @@ public class PlayerShip extends Ship implements Observer{
 			target = (target - 1) % hits.size(); //like target--; but rotates over to 0 when target == hits.size()
 		
 	}
-	
-	@Override
-	public boolean equals(Object o) {
-		if(o instanceof PlayerShip) {
-			PlayerShip ps = (PlayerShip) o;
-			return inertia == ps.inertia &&
-				   hits.equals(ps.hits) &&
-				   target == ps.target &&
-				   super.equals(o);
-		}
-		return false;
-	}
 }
