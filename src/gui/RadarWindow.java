@@ -46,6 +46,9 @@ public class RadarWindow extends JFrame {
 		addKeyListener(keyboardStateListener);
 
 		this.space = space;
+		setSize(1100, 800);
+		setLayout(null);	//ensures that absolute positioning is possible
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		uiTexts = new ArrayList<UIField>();
 		generateShips();
 		generateUIText();
@@ -58,9 +61,6 @@ public class RadarWindow extends JFrame {
 		add(renderPanel);
 		
 		addComponentListener(new AComponentListener());
-		setSize(1100, 800);
-		setLayout(null);	//ensures that absolute positioning is possible
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		initLoop();
 	}
@@ -156,7 +156,8 @@ public class RadarWindow extends JFrame {
 	}
 	
 	private void generateUIText(){
-		uiTexts.add(new UIField(20,20,"Hello!"));
+		System.out.println(this.getHeight()-20);
+		uiTexts.add(new UIField(10,90,"Hello!"));
 	}
 	
 	// TODO add a better fucking name...

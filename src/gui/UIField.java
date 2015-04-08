@@ -5,10 +5,11 @@ public class UIField {
 	private int x, y;
 	private String text;
 	
-	public UIField(int x, int y, String text) {
-		this.x = x;
-		this.y = y;
+	public UIField(int xProcent, int yProcent, String text) {
+		x = xProcent;
+		y = yProcent;
 		this.text = text;
+		System.out.println(x + ", " + y);
 	}
 	
 	@Override
