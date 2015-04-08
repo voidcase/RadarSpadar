@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -28,10 +29,12 @@ public class RenderPanel extends JPanel {
 	private double secondsSinceFPSRender;
 	private double fps;
 	private PlayerShip following;
+	private ArrayList<UIField> ui;
 	
-	public RenderPanel(Space space, PlayerShip sh) {
+	public RenderPanel(ArrayList<UIField> ui, Space space, PlayerShip sh) {
 		super();
 		this.space = space;
+		this.ui = ui;
 		following = sh;
 		secondsSinceFPSRender = System.nanoTime() * Math.pow(10, -15);
 		grid = new Grid(gridSpace, getSize().width, getSize().height);
@@ -48,26 +51,32 @@ public class RenderPanel extends JPanel {
 			g2.setRenderingHints(rh);
 		}
 		
-		List<Ship> ships = space.getShipList();
 //		g2.setColor(Color.black);
 //		g2.fill(getBounds());
 		drawBackground(g2);
 		
 		if(debugging) {
-			secondsSinceFPSRender += System.nanoTime() * Math.pow(10, -15);
-			if(secondsSinceFPSRender > 0.5) {
-				fps = 1000/RadarWindow.getTimeDelta();
-				secondsSinceFPSRender = 0;
-			}
-			g2.setColor(Color.magenta);
-			g2.setFont(new Font("Consolas", Font.PLAIN, 12));
-			g2.drawString(fps + "FPS", 0, 12);
+			drawFPS(g2);
 		}
 		
+		drawShips(g2);
+		drawUI(g2);
+	}
+	
+	private void drawUI(Graphics2D g2){
+		g2.setColor(Color.cyan);
+		g2.setFont(new Font("Consolas", Font.PLAIN, 12));
+		for(UIField f : ui){
+			g2.drawString(f.toString(),f.getX(),f.getY());
+		}
+	}
+	
+	private void drawShips(Graphics2D g2) {
 		g2.setColor(Color.green);
 		g2.setFont(new Font("Consolas", Font.PLAIN, 12));
 		float centerX = (float) getSize().getWidth()/2;
 		float centerY = (float) getSize().getHeight()/2;
+		List<Ship> ships = space.getShipList();
 		for(Ship ship : ships) {
 			Vector2D relpos = ship.getPos().add(following.getPos().scale(-1));
 			Ship target = following.getTarget();
@@ -83,6 +92,17 @@ public class RenderPanel extends JPanel {
 						centerY + (float)relpos.getY());
 			}
 		}
+	}
+
+	private void drawFPS(Graphics2D g2) {
+		secondsSinceFPSRender += System.nanoTime() * Math.pow(10, -15);
+		if(secondsSinceFPSRender > 0.5) {
+			fps = 1000/RadarWindow.getTimeDelta();
+			secondsSinceFPSRender = 0;
+		}
+		g2.setColor(Color.magenta);
+		g2.setFont(new Font("Consolas", Font.PLAIN, 12));
+		g2.drawString(fps + "FPS", 0, 12);
 	}
 	
 	private void drawBackground(Graphics2D g2) {

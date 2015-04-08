@@ -12,6 +12,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +37,7 @@ public class RadarWindow extends JFrame {
 	private Space space;
 	private PlayerShip p1;
 	private Map<String, Clip> sounds;
+	private ArrayList<UIField> uiTexts;
 	
 	public RadarWindow(Space space) {
 		super("Radar Window");
@@ -42,12 +45,14 @@ public class RadarWindow extends JFrame {
 		addKeyListener(keyboardStateListener);
 
 		this.space = space;
+		uiTexts = new ArrayList<UIField>();
 		generateShips();
+		generateUIText();
 		p1 = new PlayerShip(keyboardStateListener,space);
 		p1.setPos(new Vector2D(0, 0));
 		space.spawnShip(p1);
 
-		renderPanel = new RenderPanel(space,p1);
+		renderPanel = new RenderPanel(uiTexts,space,p1);
 		renderPanel.setLocation(0,0);
 		add(renderPanel);
 		
@@ -134,6 +139,10 @@ public class RadarWindow extends JFrame {
 		space.spawnShip(p3);
 		space.spawnShip(st);
 		space.spawnShip(gw);
+	}
+	
+	private void generateUIText(){
+		uiTexts.add(new UIField(20,20,"Hello!"));
 	}
 	
 	// TODO add a better fucking name...
