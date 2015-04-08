@@ -30,7 +30,6 @@ public class RadarWindow extends JFrame {
 	protected static double timeDelta;
 	private static final long serialVersionUID = -8212981428372798858L;
 	private static final String BACKGROUND_SN = "BACKGROUND";	// BACKGROUND_SOUNDNAME
-	private static final String ENGINE_SN = "ENGINE"; 	// ENGINE_SOUNDNAME
 	private static final String ALARM_SN = "ALARM";
 	
 	private KeyboardStateListener keyboardStateListener;
@@ -101,14 +100,11 @@ public class RadarWindow extends JFrame {
 		sounds = new HashMap<String, Clip>();
 		try {
 			Clip background = AudioSystem.getClip();
-			Clip engine = AudioSystem.getClip();
 			Clip alarm = AudioSystem.getClip();
 			background.open(AudioSystem.getAudioInputStream(new File("res/background_1.wav")));
-			engine.open(AudioSystem.getAudioInputStream(new File("res/engine.wav")));
 			alarm.open(AudioSystem.getAudioInputStream(new File("res/alarm.wav")));
 			
 			sounds.put(BACKGROUND_SN, background);
-			sounds.put(ENGINE_SN, engine);
 			sounds.put(ALARM_SN, alarm);
 		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 			e.printStackTrace();
@@ -117,20 +113,10 @@ public class RadarWindow extends JFrame {
 	
 	private void manageSounds() {
 		Clip background = sounds.get(BACKGROUND_SN);
-		Clip engine = sounds.get(ENGINE_SN);
 		Clip alarm = sounds.get(ALARM_SN);
 		if(background != null) {
 			background.loop(Clip.LOOP_CONTINUOUSLY);
 		}
-		
-//		if (engine != null) {
-//			if (p1.isMoving() && !engine.isRunning()) {
-//				engine.loop(Clip.LOOP_CONTINUOUSLY);
-//			} else {
-//				engine.stop();
-//				engine.setFramePosition(0);
-//			}
-//		}
 	}
 
 	public static double getTimeDelta(){
