@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import datastructures.Grid;
 
 public class RenderPanel extends JPanel {
+	private static final long serialVersionUID = -3104652749857411284L;
 	private Space space;
 	private Grid grid;
 	private int gridSpace = 50;

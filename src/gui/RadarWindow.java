@@ -1,16 +1,26 @@
 package gui;
 
-import game.*;
+import game.DrunkenShip;
+import game.GravityWell;
+import game.PlayerShip;
+import game.Ship;
+import game.Space;
+import game.Station;
+import game.Vector2D;
 
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
-
-import sun.audio.*;
 
 import datastructures.KeyboardStateListener;
 
@@ -18,9 +28,15 @@ public class RadarWindow extends JFrame {
 	/** difference of time between frames, in milliseconds*/
 	protected static double timeDelta;
 	private static final long serialVersionUID = -8212981428372798858L;
+	private static final String BACKGROUND_SN = "BACKGROUND";	// BACKGROUND_SOUNDNAME
+	private static final String ENGINE_SN = "ENGINE"; 	// ENGINE_SOUNDNAME
+	private static final String ALARM_SN = "ALARM";
+	
 	private KeyboardStateListener keyboardStateListener;
 	private RenderPanel renderPanel;
 	private Space space;
+	private PlayerShip p1;
+	private Map<String, Clip> sounds;
 	
 	public RadarWindow(Space space) {
 		super("Radar Window");
@@ -29,7 +45,7 @@ public class RadarWindow extends JFrame {
 
 		this.space = space;
 		generateShips();
-		PlayerShip p1 = new PlayerShip(keyboardStateListener,space);
+		p1 = new PlayerShip(keyboardStateListener,space);
 		p1.setPos(new Vector2D(0, 0));
 		space.spawnShip(p1);
 
@@ -46,6 +62,7 @@ public class RadarWindow extends JFrame {
 	}
 	
 	private void initLoop() {
+		loadSounds();
 		Thread loopUpdate = new Thread() {
 			@Override
 			public void run() {
@@ -68,11 +85,50 @@ public class RadarWindow extends JFrame {
 		loopUpdate.start();
 	}
 
+
 	/** Insert game logic here */
 	protected void update() {
 		space.moveAll();
+		manageSounds();
+	}
+
+	private void loadSounds() {
+		// TODO implement
+		sounds = new HashMap<String, Clip>();
+		try {
+			Clip background = AudioSystem.getClip();
+			Clip engine = AudioSystem.getClip();
+			Clip alarm = AudioSystem.getClip();
+			background.open(AudioSystem.getAudioInputStream(new File("res/background_1.wav")));
+			engine.open(AudioSystem.getAudioInputStream(new File("res/engine.wav")));
+			alarm.open(AudioSystem.getAudioInputStream(new File("res/alarm.wav")));
+			
+			sounds.put(BACKGROUND_SN, background);
+			sounds.put(ENGINE_SN, engine);
+			sounds.put(ALARM_SN, alarm);
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}
 	}
 	
+	private void manageSounds() {
+		Clip background = sounds.get(BACKGROUND_SN);
+		Clip engine = sounds.get(ENGINE_SN);
+		Clip alarm = sounds.get(ALARM_SN);
+		if(background != null) {
+			background.loop(Clip.LOOP_CONTINUOUSLY);
+		}
+		
+//		if (engine != null) {
+//			if (p1.isMoving() && !engine.isRunning()) {
+//				engine.loop(Clip.LOOP_CONTINUOUSLY);
+//			} else {
+//				engine.stop();
+//				engine.setFramePosition(0);
+//			}
+//		}
+	}
+
 	public static double getTimeDelta(){
 		return timeDelta;
 	}

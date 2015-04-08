@@ -38,6 +38,10 @@ public class PlayerShip extends Ship implements Observer{
 			return hits.get(target);
 		else return null;
 	}
+	
+	public boolean isMoving() {
+		return !vel.equals(Vector2D.ZERO);
+	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
