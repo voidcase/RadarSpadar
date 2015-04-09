@@ -42,6 +42,8 @@ public class SoundManager {
 			sounds.put(TARGET_FAR_SN, targetFar);
 		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 			e.printStackTrace();
+		} catch(IllegalArgumentException e){
+			System.out.println("Sound disabled.");
 		}
 	}
 	
