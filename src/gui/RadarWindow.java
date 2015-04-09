@@ -64,11 +64,11 @@ public class RadarWindow extends JFrame {
 		setLayout(null);	//ensures that absolute positioning is possible
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
+		loadSounds();
 		initLoop();
 	}
 	
 	private void initLoop() {
-		loadSounds();
 		Thread loopUpdate = new Thread() {
 			@Override
 			public void run() {
