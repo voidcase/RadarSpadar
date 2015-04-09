@@ -1,5 +1,7 @@
 package game;
 
+import globals.Globals;
+
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Observable;
@@ -63,14 +65,14 @@ public class PlayerShip extends Ship implements Observer{
 			else
 				System.out.println("deactivated");
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_S){
+		else if(e.getKeyCode() == Globals.KeyCodes.SCAN){
 			hits = space.scan(pos, 1000);
 			if (hits != null && hits.size() != 0)
 				target = 0;
 			else target = NO_TARGET;
 			System.out.println("Scan report: " + hits);
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_R){
+		else if(e.getKeyCode() == Globals.KeyCodes.NEXT_TARGET){
 			if(hits == null || hits.size() == 0){
 				hits = space.scan(pos, 1000);
 				target = 0 % hits.size();
@@ -78,7 +80,7 @@ public class PlayerShip extends Ship implements Observer{
 			target = Math.abs(target + 1) % hits.size();
 			System.out.println("targetnr = " + target);
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_E){
+		else if(e.getKeyCode() == Globals.KeyCodes.PREV_TARGET){
 			if(hits == null || hits.size() == 0){
 				hits = space.scan(pos, 1000);
 				target = 1 % hits.size();
@@ -86,7 +88,7 @@ public class PlayerShip extends Ship implements Observer{
 			target = Math.abs(target - 1) % hits.size();
 			System.out.println("dargetnr = " + target);
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+		else if(e.getKeyCode() == Globals.KeyCodes.FIRE_LASER) {
 			Ship target = getTarget();
 			if (target != null) {
 //				System.out.println("Fire laser at " + target.name);

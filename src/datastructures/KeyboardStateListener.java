@@ -1,6 +1,7 @@
 package datastructures;
 
 import game.Vector2D;
+import globals.Globals;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -14,25 +15,25 @@ public class KeyboardStateListener extends Observable implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_UP)
+		if(e.getKeyCode() == Globals.KeyCodes.UP)
 			arrowUp = true;
-		if(e.getKeyCode() == KeyEvent.VK_DOWN)
+		if(e.getKeyCode() == Globals.KeyCodes.DOWN)
 			arrowDown = true;
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+		if(e.getKeyCode() == Globals.KeyCodes.RIGHT)
 			arrowRight = true;
-		if(e.getKeyCode() == KeyEvent.VK_LEFT)
+		if(e.getKeyCode() == Globals.KeyCodes.LEFT)
 			arrowLeft = true;
 	}
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_UP)
+		if(e.getKeyCode() == Globals.KeyCodes.UP)
 			arrowUp = false;
-		else if(e.getKeyCode() == KeyEvent.VK_DOWN)
+		else if(e.getKeyCode() == Globals.KeyCodes.DOWN)
 			arrowDown = false;
-		else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+		else if(e.getKeyCode() == Globals.KeyCodes.RIGHT)
 			arrowRight = false;
-		else if(e.getKeyCode() == KeyEvent.VK_LEFT)
+		else if(e.getKeyCode() == Globals.KeyCodes.LEFT)
 			arrowLeft = false;
 		else{
 			setChanged();
