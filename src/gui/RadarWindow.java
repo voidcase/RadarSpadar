@@ -59,7 +59,7 @@ public class RadarWindow extends JFrame {
 		renderPanel.setLocation(0,0);
 		add(renderPanel);
 		
-		addComponentListener(new AComponentListener());
+		addComponentListener(new ResizeListener());
 		setSize(1100, 800);
 		setLayout(null);	//ensures that absolute positioning is possible
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -192,7 +192,7 @@ public class RadarWindow extends JFrame {
 	}
 	
 	// TODO add a better fucking name...
-	private class AComponentListener implements ComponentListener {
+	private class ResizeListener implements ComponentListener {
 
 		@Override
 		public void componentHidden(ComponentEvent e) {

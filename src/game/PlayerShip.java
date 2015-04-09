@@ -114,6 +114,7 @@ public class PlayerShip extends Ship implements Observer{
 		public void run() {
 			parent.attacking = true;
 			while (System.nanoTime() - executionTime <= 0);
+			//inflict damage on parent.getTarget()
 			parent.attacking = false;
 			System.out.println("Laser fired");
 		}
