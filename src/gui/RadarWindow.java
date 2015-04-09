@@ -12,9 +12,7 @@ import game.Vector2D;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
-import java.util.Map;
 
-import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 
 import datastructures.KeyboardStateListener;
@@ -102,8 +100,6 @@ public class RadarWindow extends JFrame {
 		p3.setPos(new Vector2D(100, 100));
 		st.setPos(new Vector2D(300,100));
 		gw.setPos(new Vector2D(-300,-300));
-		p2.setAngle(0);
-		p3.setAngle(0);
 		space.spawnShip(p2);
 		space.spawnShip(p3);
 		space.spawnShip(st);

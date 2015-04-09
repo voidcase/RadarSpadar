@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.TimerTask;
 
 import datastructures.KeyboardStateListener;
 
