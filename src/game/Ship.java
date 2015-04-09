@@ -2,6 +2,9 @@ package game;
 
 import gui.RadarWindow;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Ship {
 	public static final double INFINITE_HEALTH = Double.MAX_VALUE;
 	protected String name = "o";
@@ -11,12 +14,14 @@ public abstract class Ship {
 	protected double health;
 	protected double damageAmount = 0;
 	protected Space space;
+	protected List<Item> inventory;
 	
 	public Ship(Space space, String name, double health) {
 		this.space = space;
 		this.name = name;
 		maxHealth = health;
 		this.health = health;
+		inventory = new ArrayList<Item>();
 	}
 	
 	public abstract void act();
@@ -42,6 +47,10 @@ public abstract class Ship {
 		return name;
 	}
 	
+	public void addItem(Item i) {
+		inventory.add(i);
+	}
+	
 	/** Returns a string with the percentage of remaining health, with no decimals */
 	public String getHealthPercentage() {
 		if (health != INFINITE_HEALTH)
@@ -57,7 +66,6 @@ public abstract class Ship {
 	public void damage(double dmgAmount) {
 		if (health != INFINITE_HEALTH) {
 			health -= dmgAmount;
-//			System.out.println(name + "'s health = " + health);
 			if (health <= 0) {
 				space.kill(this);
 			}
