@@ -10,8 +10,8 @@ import datastructures.KeyboardStateListener;
 public class PlayerShip extends Ship implements Observer{
 	public static int NO_TARGET = -1;
 	public static int RANGE_CLOSE = 200;
-	public static int RANGE_MEDIUM = 400;
-	public static int RANGE_FAR = 800;
+	public static int RANGE_MEDIUM = 500;
+	public static int RANGE_FAR = 900;
 	
 	private KeyboardStateListener keyboard;
 	private boolean inertia = false;

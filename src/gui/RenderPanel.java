@@ -103,7 +103,7 @@ public class RenderPanel extends JPanel {
 		if (target != null && following.isAttacking()) {
 			System.out.println("RenderPanel.drawLasers()");
 			Vector2D originPos = following.getPos();
-			Vector2D targetPos = following.getTarget().getPos();
+			Vector2D targetPos = target.getPos();
 			int x1 = (int) originPos.getX();
 			int y1 = (int) originPos.getY();
 			int x2 = (int) targetPos.getX();
