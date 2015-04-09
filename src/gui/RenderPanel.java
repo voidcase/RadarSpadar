@@ -73,11 +73,12 @@ public class RenderPanel extends JPanel {
 		Color oldColor = g2.getColor();
 		g2.setColor(Color.green);
 		g2.setFont(new Font("Consolas", Font.PLAIN, 12));
-		float centerX = (float) getSize().getWidth()/2;
-		float centerY = (float) getSize().getHeight()/2;
+		Vector2D center = getScrCenter();
+		float centerX = (float) center.getX();
+		float centerY = (float) center.getY();
 		List<Ship> ships = space.getShipList();
 		for(Ship ship : ships) {
-			Vector2D relpos = ship.getPos().add(following.getPos().scale(-1));
+			Vector2D relpos = following.getPos().distanceVectorTo(ship.getPos());
 			Ship target = following.getTarget();
 			if(ship.equals(target)) {
 				g2.setColor(selectedColor);
@@ -94,6 +95,12 @@ public class RenderPanel extends JPanel {
 		g2.setColor(oldColor);
 	}
 	
+	private Vector2D getScrCenter() {
+		double centerX = getSize().getWidth()/2;
+		double centerY = getSize().getHeight()/2;
+		return new Vector2D(centerX, centerY);
+	}
+
 	// TODO implement
 	private void drawLasers(Graphics2D g2) {
 		Color oldColor = g2.getColor();
@@ -102,12 +109,13 @@ public class RenderPanel extends JPanel {
 		Ship target = following.getTarget();
 		if (target != null && following.isAttacking()) {
 			System.out.println("RenderPanel.drawLasers()");
-			Vector2D originPos = following.getPos();
-			Vector2D targetPos = target.getPos();
-			int x1 = (int) originPos.getX();
-			int y1 = (int) originPos.getY();
-			int x2 = (int) targetPos.getX();
-			int y2 = (int) targetPos.getY();
+			Vector2D center = getScrCenter();
+			Vector2D targetRelPos = target.getPos().distanceVectorTo(center);
+			int x1 = (int) center.getX();
+			int y1 = (int) center.getY();
+			int x2 = (int) (targetRelPos.getX() + center.getX());
+			int y2 = (int) (targetRelPos.getY() + center.getY());
+			System.out.println("target = " + target.toString() +  " x1 = " + x1 + " y1 = " + y1 + " x2 = " + x2 + " y2 = " + y2);
 			g2.drawLine(x1, y1, x2, y2);
 		}
 		g2.setColor(oldColor);
