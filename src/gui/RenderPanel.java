@@ -82,12 +82,12 @@ public class RenderPanel extends JPanel {
 			Ship target = following.getTarget();
 			if(ship.equals(target)) {
 				g2.setColor(selectedColor);
-				g2.drawString(ship.toString(), 
+				g2.drawString(ship.toString() + " " + ship.getHealthPercentage(), 
 						centerX + (float)relpos.getX(), 
 						centerY + (float)relpos.getY());
 				g2.setColor(Color.green);
 			} else {
-				g2.drawString(ship.toString(), 
+				g2.drawString(ship.toString() + " " + ship.getHealthPercentage(), 
 						centerX + (float)relpos.getX(), 
 						centerY + (float)relpos.getY());
 			}

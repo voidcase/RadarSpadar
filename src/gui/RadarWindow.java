@@ -92,9 +92,9 @@ public class RadarWindow extends JFrame {
 	
 	private void generateShips() {
 		
-		Ship p2 = new DrunkenShip();
-		Ship p3 = new DrunkenShip();
-		Ship st = new Station();
+		Ship p2 = new DrunkenShip(space);
+		Ship p3 = new DrunkenShip(space);
+		Ship st = new Station(space);
 		Ship gw = new GravityWell(1,space);
 		p2.setPos(new Vector2D(20, 250));
 		p3.setPos(new Vector2D(100, 100));

@@ -15,17 +15,16 @@ public class PlayerShip extends Ship implements Observer{
 	
 	private KeyboardStateListener keyboard;
 	private boolean inertia = false;
-	private Space space;
 	private List<Ship> hits;
 	private int target;
 	private boolean attacking = false;
 	
 	public PlayerShip(KeyboardStateListener ksl, Space s){
-		name = "^";
+		super(s, "^", Ship.INFINITE_HEALTH);
 		keyboard = ksl;
 		ksl.addObserver(this);
-		space = s;
 		target = NO_TARGET;
+		damageAmount = 20;
 	}
 
 	@Override
@@ -91,7 +90,7 @@ public class PlayerShip extends Ship implements Observer{
 			Ship target = getTarget();
 			if (target != null) {
 //				System.out.println("Fire laser at " + target.name);
-				new LaserAttackTask(this, System.nanoTime() + 1 * (long)Math.pow(10, 9)).start();
+				new LaserAttackTask(this, target, System.nanoTime() + 1 * (long)Math.pow(10, 9)).start();
 			}
 		}
 	}
@@ -99,21 +98,23 @@ public class PlayerShip extends Ship implements Observer{
 	private class LaserAttackTask extends Thread {
 		private long executionTime;
 		private PlayerShip parent;
+		private Ship target;
 		
 		/**
 		 * 
 		 * @param executionTime the time when the task should be executed in nanoseconds
 		 */
-		public LaserAttackTask(PlayerShip parent, long executionTime) {
+		public LaserAttackTask(PlayerShip parent, Ship target, long executionTime) {
 			this.executionTime = executionTime;
 			this.parent = parent;
+			this.target = target;
 		}
 		
 		@Override
 		public void run() {
 			parent.attacking = true;
 			while (System.nanoTime() - executionTime <= 0);
-			//inflict damage on parent.getTarget()
+			target.damage(damageAmount);
 			parent.attacking = false;
 		}
 	}
