@@ -90,7 +90,7 @@ public class PlayerShip extends Ship implements Observer{
 		else if(e.getKeyCode() == KeyEvent.VK_SPACE) {
 			Ship target = getTarget();
 			if (target != null) {
-				System.out.println("Fire laser at " + target.name);
+//				System.out.println("Fire laser at " + target.name);
 				new LaserAttackTask(this, System.nanoTime() + 1 * (long)Math.pow(10, 9)).start();
 			}
 		}
@@ -115,7 +115,6 @@ public class PlayerShip extends Ship implements Observer{
 			while (System.nanoTime() - executionTime <= 0);
 			//inflict damage on parent.getTarget()
 			parent.attacking = false;
-			System.out.println("Laser fired");
 		}
 	}
 
