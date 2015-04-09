@@ -2,8 +2,6 @@ package game;
 
 import gui.RadarWindow;
 
-import java.util.Map;
-
 public abstract class Ship {
 	public static final double INFINITE_HEALTH = Double.MAX_VALUE;
 	protected String name = "o";
