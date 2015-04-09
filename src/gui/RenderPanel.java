@@ -51,27 +51,26 @@ public class RenderPanel extends JPanel {
 			g2.setRenderingHints(rh);
 		}
 		
-//		g2.setColor(Color.black);
-//		g2.fill(getBounds());
 		drawBackground(g2);
-		
-		if(debugging) {
+		if(debugging)
 			drawFPS(g2);
-		}
-		
 		drawShips(g2);
+		drawLasers(g2);
 		drawUI(g2);
 	}
 	
 	private void drawUI(Graphics2D g2){
+		Color oldColor = g2.getColor();
 		g2.setColor(Color.cyan);
 		g2.setFont(new Font("Consolas", Font.PLAIN, 12));
 		for(UIField f : ui){
 			g2.drawString(f.toString(),f.getX(),f.getY());
 		}
+		g2.setColor(oldColor);
 	}
 	
 	private void drawShips(Graphics2D g2) {
+		Color oldColor = g2.getColor();
 		g2.setColor(Color.green);
 		g2.setFont(new Font("Consolas", Font.PLAIN, 12));
 		float centerX = (float) getSize().getWidth()/2;
@@ -92,6 +91,26 @@ public class RenderPanel extends JPanel {
 						centerY + (float)relpos.getY());
 			}
 		}
+		g2.setColor(oldColor);
+	}
+	
+	// TODO implement
+	private void drawLasers(Graphics2D g2) {
+		Color oldColor = g2.getColor();
+		g2.setColor(Color.RED);
+		
+		Ship target = following.getTarget();
+		if (target != null && following.isAttacking()) {
+			System.out.println("RenderPanel.drawLasers()");
+			Vector2D originPos = following.getPos();
+			Vector2D targetPos = following.getTarget().getPos();
+			int x1 = (int) originPos.getX();
+			int y1 = (int) originPos.getY();
+			int x2 = (int) targetPos.getX();
+			int y2 = (int) targetPos.getY();
+			g2.drawLine(x1, y1, x2, y2);
+		}
+		g2.setColor(oldColor);
 	}
 
 	private void drawFPS(Graphics2D g2) {
@@ -106,6 +125,7 @@ public class RenderPanel extends JPanel {
 	}
 	
 	private void drawBackground(Graphics2D g2) {
+		Color oldColor = g2.getColor();
 		g2.setColor(Color.black);
 		g2.fill(getBounds());
 		
@@ -131,10 +151,10 @@ public class RenderPanel extends JPanel {
 			int y2 = (int) verticalEndVectors[i].getY();
 			g2.drawLine(x, y1, x, y2);
 		}
-//		System.out.println("horizontalStartVectors[0].getX() = " + horizontalStartVectors[0].getX());
+		g2.setColor(oldColor);
 	}
 	
-	public void redrawGrid() {
+	public void recalculateGrid() {
 		grid = new Grid(gridSpace, getSize().width + 1000, getSize().height + 1000);
 	}
 }

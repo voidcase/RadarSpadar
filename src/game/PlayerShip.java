@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.TimerTask;
 
 import datastructures.KeyboardStateListener;
 
@@ -18,6 +19,7 @@ public class PlayerShip extends Ship implements Observer{
 	private Space space;
 	private List<Ship> hits;
 	private int target;
+	private boolean attacking = false;
 	
 	public PlayerShip(KeyboardStateListener ksl, Space s){
 		name = "^";
@@ -44,6 +46,10 @@ public class PlayerShip extends Ship implements Observer{
 	
 	public boolean isMoving() {
 		return vel.getX() == 0 && vel.getY() == 0;
+	}
+
+	public boolean isAttacking() {
+		return attacking;
 	}
 
 	@Override
@@ -82,5 +88,35 @@ public class PlayerShip extends Ship implements Observer{
 			target = Math.abs(target - 1) % hits.size();
 			System.out.println("dargetnr = " + target);
 		}
+		else if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+			Ship target = getTarget();
+			if (target != null) {
+				System.out.println("Fire laser at " + target.name);
+				new LaserAttackTask(this, System.nanoTime() + 1 * (long)Math.pow(10, 9)).start();
+			}
+		}
 	}
+	
+	private class LaserAttackTask extends Thread {
+		private long executionTime;
+		private PlayerShip parent;
+		
+		/**
+		 * 
+		 * @param executionTime the time when the task should be executed in nanoseconds
+		 */
+		public LaserAttackTask(PlayerShip parent, long executionTime) {
+			this.executionTime = executionTime;
+			this.parent = parent;
+		}
+		
+		@Override
+		public void run() {
+			parent.attacking = true;
+			while (System.nanoTime() - executionTime <= 0);
+			parent.attacking = false;
+			System.out.println("Laser fired");
+		}
+	}
+
 }
