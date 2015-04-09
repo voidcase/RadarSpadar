@@ -54,8 +54,8 @@ public class RenderPanel extends JPanel {
 		drawBackground(g2);
 		if(debugging)
 			drawFPS(g2);
-		drawShips(g2);
 		drawLasers(g2);
+		drawShips(g2);
 		drawUI(g2);
 	}
 	
@@ -101,21 +101,17 @@ public class RenderPanel extends JPanel {
 		return new Vector2D(centerX, centerY);
 	}
 
-	// TODO implement
 	private void drawLasers(Graphics2D g2) {
 		Color oldColor = g2.getColor();
-		g2.setColor(Color.RED);
-		
 		Ship target = following.getTarget();
 		if (target != null && following.isAttacking()) {
-			System.out.println("RenderPanel.drawLasers()");
+			g2.setColor(getPulsingRed());
 			Vector2D center = getScrCenter();
 			Vector2D targetRelPos = following.getPos().distanceVectorTo(target.getPos());
 			int x1 = (int) center.getX();
 			int y1 = (int) center.getY();
 			int x2 = (int) (targetRelPos.getX() + center.getX());
 			int y2 = (int) (targetRelPos.getY() + center.getY());
-			System.out.println("target = " + target.toString() +  " x1 = " + x1 + " y1 = " + y1 + " x2 = " + x2 + " y2 = " + y2);
 			g2.drawLine(x1, y1, x2, y2);
 		}
 		g2.setColor(oldColor);
@@ -164,5 +160,15 @@ public class RenderPanel extends JPanel {
 	
 	public void recalculateGrid() {
 		grid = new Grid(gridSpace, getSize().width + 1000, getSize().height + 1000);
+	}
+	
+	private Color getPulsingRed() {
+		long time = (long) (System.nanoTime() * Math.pow(10, -8));
+		int minLevel = 128;
+		int amp = 255 - minLevel;
+		double zeroFlooredSine = (Math.sin(1.25 * time) + 1)/2;
+		int level = (int) (amp * zeroFlooredSine + minLevel);
+		Color red = new Color(level, 0, 0);
+		return red;
 	}
 }
