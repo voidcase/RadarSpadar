@@ -102,7 +102,6 @@ public class PlayerShip extends Ship implements Observer{
 		else if(e.getKeyCode() == Globals.KeyCodes.FIRE_LASER) {
 			Ship target = getTarget();
 			if (target != null) {
-//				System.out.println("Fire laser at " + target.name);
 				new LaserAttackTask(this, target, System.nanoTime() + 1 * (long)Math.pow(10, 9)).start();
 			}
 		}

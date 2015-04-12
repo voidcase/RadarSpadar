@@ -15,13 +15,13 @@ public class PirateShip extends Ship {
 			target = newTarget();
 		}
 		if(target != null){
-			//vel = vel.add(pos.distanceVectorTo(target.pos).normalize().scale(0));
+			vel = vel.add(pos.distanceVectorTo(target.pos).normalize().scale(0.01));
 		}
 	}
 	
 	private Ship newTarget(){
 		for(Ship s : space.scan(pos,900)){
-			if(!s.equals(this)||s.maxHealth!=Ship.INFINITE_HEALTH)
+			if(!equals(s) && s.maxHealth!=Ship.INFINITE_HEALTH)
 				return s;
 		}
 		return null;
