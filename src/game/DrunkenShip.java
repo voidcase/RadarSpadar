@@ -3,7 +3,7 @@ package game;
 public class DrunkenShip extends Ship {
 
 	public DrunkenShip(Space space){
-		super(space, ". Drunk", 100);
+		super(space, ". DRUNK", 100);
 	}
 	
 	@Override

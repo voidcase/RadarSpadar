@@ -92,17 +92,17 @@ public class RadarWindow extends JFrame {
 		Ship p2 = new DrunkenShip(space);
 		Ship p3 = new DrunkenShip(space);
 		Ship st = new Station(space);
-		Ship gw = new GravityWell(1,space);
-		Ship pr = new PirateShip(space); 
+		//Ship gw = new GravityWell(1,space);
+		Ship pr = new PirateShip(space);
 		p2.setPos(new Vector2D(20, 250));
 		p3.setPos(new Vector2D(100, 100));
 		st.setPos(new Vector2D(300,100));
-		gw.setPos(new Vector2D(-300,-300));
-		pr.setPos(new Vector2D(50,100));
+		//gw.setPos(new Vector2D(-300,-300));
+		pr.setPos(new Vector2D(-20,-20));
 		space.spawnShip(p2);
 		space.spawnShip(p3);
 		space.spawnShip(st);
-		space.spawnShip(gw);
+		//space.spawnShip(gw);
 		space.spawnShip(pr);
 	}
 	
