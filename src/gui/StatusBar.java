@@ -3,12 +3,10 @@ package gui;
 import game.PlayerShip;
 
 public class StatusBar extends UIField{
-	
 	private PlayerShip subject;
 	
-	
 	public StatusBar(PlayerShip s) {
-		super(10,90,"---");
+		super("---");
 		subject = s;
 	}
 	
@@ -18,5 +16,13 @@ public class StatusBar extends UIField{
 	}
 
 
+	@Override
+	public int getX(RenderPanel parent){
+		return 50;
+	}
 
+	@Override
+	public int getY(RenderPanel parent){
+		return parent.getHeight() - 80;
+	}
 }
