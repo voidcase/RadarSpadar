@@ -18,8 +18,9 @@ public class PirateShip extends Ship {
 		}
 		if(target != null){
 			double dist = pos.distance(target.pos);
-			double scalar = Math.log(dist);
-			vel = vel.add(pos.distanceVectorTo(target.pos).normalize().scale(scalar*0.001));
+			
+			double scalar = dist<r?-1:1;
+			vel = vel.add(pos.distanceVectorTo(target.pos).normalize().scale(scalar*0.005));
 		}
 	}
 	
