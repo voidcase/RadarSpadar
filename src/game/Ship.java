@@ -54,7 +54,7 @@ public abstract class Ship {
 	/** Returns a string with the percentage of remaining health, with no decimals */
 	public String getHealthPercentage() {
 		if (health != INFINITE_HEALTH)
-			return (int)100*(health/maxHealth) + "%";
+			return (int)(100*(health/maxHealth)) + "%";
 		else return "";
 	}
 	
@@ -70,5 +70,9 @@ public abstract class Ship {
 				space.kill(this);
 			}
 		}
+	}
+
+	public boolean isKill() {
+		return health < 0;
 	}
 }

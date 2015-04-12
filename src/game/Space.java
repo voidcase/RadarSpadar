@@ -3,13 +3,14 @@ package game;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Space{
 	private List<Ship> ships;
 	
 	public Space(){
-		ships = new ArrayList<Ship>();
+		ships = new LinkedList<Ship>();
 	}
 	
 	public void spawnShip(Ship s){

@@ -36,6 +36,9 @@ public class PlayerShip extends Ship implements Observer{
 		if(inertia){
 			vel = vel.add(vel.scale(-0.05));
 		}
+		if(attacking){
+			getTarget().damage(1);
+		}
 	}
 	
 	public Ship getTarget() {
@@ -54,8 +57,10 @@ public class PlayerShip extends Ship implements Observer{
 	
 	public String status(){
 		StringBuilder sb = new StringBuilder();
-		sb.append("HULL: ");	sb.append(getHealthPercentage() + " | ");
-		sb.append("INERTIA: ");	sb.append(inertia?"ON  | ":"OFF | ");
+		sb.append("HULL: ");
+		sb.append(getHealthPercentage() + " | ");
+		sb.append("INERTIA: ");
+		sb.append(inertia?"ON  | ":"OFF | ");
 		sb.append("TARGET-DISTANCE: ");
 			if(getTarget() == null) sb.append("-");
 			else sb.append(pos.distance(getTarget().pos));
@@ -125,8 +130,8 @@ public class PlayerShip extends Ship implements Observer{
 		@Override
 		public void run() {
 			parent.attacking = true;
-			while (System.nanoTime() - executionTime <= 0);
-			target.damage(damageAmount);
+			while (System.nanoTime() - executionTime <= 0 && !target.isKill());
+			//target.damage(damageAmount);
 			parent.attacking = false;
 		}
 	}
