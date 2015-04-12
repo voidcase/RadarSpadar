@@ -22,7 +22,7 @@ public class PlayerShip extends Ship implements Observer{
 	private boolean attacking = false;
 	
 	public PlayerShip(KeyboardStateListener ksl, Space s){
-		super(s, "^", 200);
+		super(s, ". player", 200);
 		keyboard = ksl;
 		ksl.addObserver(this);
 		target = NO_TARGET;

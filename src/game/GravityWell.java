@@ -4,7 +4,7 @@ public class GravityWell extends Ship {
 	private int mass;
 	
 	public GravityWell(int m, Space s){
-		super(s, "* Gravity_well", Ship.INFINITE_HEALTH);
+		super(s, ". Gravity_well", Ship.INFINITE_HEALTH);
 		mass = m;
 	}
 	
