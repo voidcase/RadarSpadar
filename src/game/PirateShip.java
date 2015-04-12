@@ -3,9 +3,11 @@ package game;
 public class PirateShip extends Ship {
 
 	Ship target;
+	double r;
 
 	public PirateShip(Space space) {
 		super(space, ". PIRATE", 100);
+		r = 300;
 		
 	}
 
@@ -15,7 +17,9 @@ public class PirateShip extends Ship {
 			target = newTarget();
 		}
 		if(target != null){
-			vel = vel.add(pos.distanceVectorTo(target.pos).normalize().scale(0.01));
+			double dist = pos.distance(target.pos);
+			double scalar = Math.log(dist);
+			vel = vel.add(pos.distanceVectorTo(target.pos).normalize().scale(scalar*0.001));
 		}
 	}
 	
