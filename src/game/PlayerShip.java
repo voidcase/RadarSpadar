@@ -22,7 +22,7 @@ public class PlayerShip extends Ship implements Observer{
 	private boolean attacking = false;
 	
 	public PlayerShip(KeyboardStateListener ksl, Space s){
-		super(s, "^", Ship.INFINITE_HEALTH);
+		super(s, "^", 200);
 		keyboard = ksl;
 		ksl.addObserver(this);
 		target = NO_TARGET;
@@ -50,6 +50,17 @@ public class PlayerShip extends Ship implements Observer{
 
 	public boolean isAttacking() {
 		return attacking;
+	}
+	
+	public String status(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("HULL: ");	sb.append(getHealthPercentage() + " | ");
+		sb.append("INERTIA: ");	sb.append(inertia?"ON  | ":"OFF | ");
+		sb.append("TARGET-DISTANCE: ");
+			if(getTarget() == null) sb.append("-");
+			else sb.append(pos.distance(getTarget().pos));
+		
+		return sb.toString();
 	}
 
 	@Override

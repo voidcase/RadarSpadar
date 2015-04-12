@@ -40,10 +40,10 @@ public class RadarWindow extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		uiTexts = new ArrayList<UIField>();
 		generateShips();
-		generateUIText();
 		p1 = new PlayerShip(keyboardStateListener,space);
 		p1.setPos(new Vector2D(0, 0));
 		space.spawnShip(p1);
+		generateUIText();
 
 		renderPanel = new RenderPanel(uiTexts,space,p1);
 		renderPanel.setLocation(0,0);
@@ -111,7 +111,7 @@ public class RadarWindow extends JFrame {
 	}
 	
 	private void generateUIText(){
-		uiTexts.add(new UIField(10,90,"Rättvisemärkt snuff!"));
+		uiTexts.add(new StatusBar(p1));
 	}
 	
 	// TODO add a better fucking name...
