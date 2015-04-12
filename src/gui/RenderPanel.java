@@ -64,7 +64,7 @@ public class RenderPanel extends JPanel {
 		g2.setColor(Color.cyan);
 		g2.setFont(new Font("Consolas", Font.PLAIN, 12));
 		for(UIField f : ui){
-			g2.drawString(f.toString(),f.getX()*getWidth()/100,f.getY()*getHeight()/100);
+			g2.drawString(f.toString(),f.getX(this),f.getY(this));
 		}
 		g2.setColor(oldColor);
 	}

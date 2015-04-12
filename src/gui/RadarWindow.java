@@ -35,9 +35,6 @@ public class RadarWindow extends JFrame {
 		addKeyListener(keyboardStateListener);
 
 		this.space = space;
-		setSize(1100, 800);
-		setLayout(null);	//ensures that absolute positioning is possible
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		uiTexts = new ArrayList<UIField>();
 		generateShips();
 		p1 = new PlayerShip(keyboardStateListener,space);
