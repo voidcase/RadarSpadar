@@ -4,23 +4,15 @@ import game.DrunkenShip;
 import game.GravityWell;
 import game.PlayerShip;
 import game.Ship;
+import game.SoundManager;
 import game.Space;
 import game.Station;
 import game.Vector2D;
 
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 
 import datastructures.KeyboardStateListener;
@@ -29,15 +21,13 @@ public class RadarWindow extends JFrame {
 	/** difference of time between frames, in milliseconds*/
 	protected static double timeDelta;
 	private static final long serialVersionUID = -8212981428372798858L;
-	private static final String BACKGROUND_SN = "BACKGROUND";	// BACKGROUND_SOUNDNAME
-	private static final String ALARM_SN = "ALARM";
 	
 	private KeyboardStateListener keyboardStateListener;
 	private RenderPanel renderPanel;
 	private Space space;
 	private PlayerShip p1;
-	private Map<String, Clip> sounds;
 	private ArrayList<UIField> uiTexts;
+	private SoundManager soundManager;
 	
 	public RadarWindow(Space space) {
 		super("Radar Window");
@@ -59,13 +49,17 @@ public class RadarWindow extends JFrame {
 		renderPanel.setLocation(0,0);
 		add(renderPanel);
 		
-		addComponentListener(new AComponentListener());
+		addComponentListener(new ResizeListener());
+		setSize(1100, 800);
+		setLayout(null);	//ensures that absolute positioning is possible
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 		setVisible(true);
+		soundManager = new SoundManager(p1);
 		initLoop();
 	}
 	
 	private void initLoop() {
-		loadSounds();
 		Thread loopUpdate = new Thread() {
 			@Override
 			public void run() {
@@ -92,32 +86,9 @@ public class RadarWindow extends JFrame {
 	/** Insert game logic here */
 	protected void update() {
 		space.moveAll();
-		manageSounds();
+		soundManager.manageSounds();
 	}
 
-	private void loadSounds() {
-		// TODO implement
-		sounds = new HashMap<String, Clip>();
-		try {
-			Clip background = AudioSystem.getClip();
-			Clip alarm = AudioSystem.getClip();
-			background.open(AudioSystem.getAudioInputStream(new File("res/background_1.wav")));
-			alarm.open(AudioSystem.getAudioInputStream(new File("res/alarm.wav")));
-			
-			sounds.put(BACKGROUND_SN, background);
-			sounds.put(ALARM_SN, alarm);
-		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void manageSounds() {
-		Clip background = sounds.get(BACKGROUND_SN);
-		Clip alarm = sounds.get(ALARM_SN);
-		if(background != null) {
-			background.loop(Clip.LOOP_CONTINUOUSLY);
-		}
-	}
 
 	public static double getTimeDelta(){
 		return timeDelta;
@@ -125,16 +96,14 @@ public class RadarWindow extends JFrame {
 	
 	private void generateShips() {
 		
-		Ship p2 = new DrunkenShip();
-		Ship p3 = new DrunkenShip();
-		Ship st = new Station();
+		Ship p2 = new DrunkenShip(space);
+		Ship p3 = new DrunkenShip(space);
+		Ship st = new Station(space);
 		Ship gw = new GravityWell(1,space);
 		p2.setPos(new Vector2D(20, 250));
 		p3.setPos(new Vector2D(100, 100));
 		st.setPos(new Vector2D(300,100));
 		gw.setPos(new Vector2D(-300,-300));
-		p2.setAngle(0);
-		p3.setAngle(0);
 		space.spawnShip(p2);
 		space.spawnShip(p3);
 		space.spawnShip(st);
@@ -146,7 +115,7 @@ public class RadarWindow extends JFrame {
 	}
 	
 	// TODO add a better fucking name...
-	private class AComponentListener implements ComponentListener {
+	private class ResizeListener implements ComponentListener {
 
 		@Override
 		public void componentHidden(ComponentEvent e) {
@@ -161,7 +130,7 @@ public class RadarWindow extends JFrame {
 		@Override
 		public void componentResized(ComponentEvent e) {
 			renderPanel.setSize(getSize());
-			renderPanel.redrawGrid();
+			renderPanel.recalculateGrid();
 		}
 
 		@Override

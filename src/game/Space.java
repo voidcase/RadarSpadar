@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Observable;
 
 public class Space{
 	private List<Ship> ships;
@@ -47,11 +46,14 @@ public class Space{
 		public ProximityComparator(Vector2D origin){
 			ori = origin;
 		}
+		
 		@Override
 		public int compare(Ship arg0, Ship arg1) {
-			// TODO Auto-generated method stub
 			return (int) (ori.distance(arg0.pos)-ori.distance(arg1.pos));
 		}
-		
+	}
+
+	public void kill(Ship ship) {
+		ships.remove(ship);
 	}
 }

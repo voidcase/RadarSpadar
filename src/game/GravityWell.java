@@ -2,17 +2,15 @@ package game;
 
 public class GravityWell extends Ship {
 	private int mass;
-	private Space environment;
 	
-	public GravityWell(int m, Space e){
+	public GravityWell(int m, Space s){
+		super(s, "* Gravity_well", Ship.INFINITE_HEALTH);
 		mass = m;
-		environment = e;
-		name = "* Gravity_well";
 	}
 	
 	@Override
 	public void act() {
-		for(Ship s: environment.scan(pos,1000)){
+		for(Ship s: space.scan(pos,1000)){
 			if(!s.equals(this)){
 				s.vel = s.vel.add(s.pos.distanceVectorTo(pos).normalize().scale(mass/pos.distance(s.pos)));
 			}

@@ -51,47 +51,70 @@ public class RenderPanel extends JPanel {
 			g2.setRenderingHints(rh);
 		}
 		
-//		g2.setColor(Color.black);
-//		g2.fill(getBounds());
 		drawBackground(g2);
-		
-		if(debugging) {
+		if(debugging)
 			drawFPS(g2);
-		}
-		
+		drawLasers(g2);
 		drawShips(g2);
 		drawUI(g2);
 	}
 	
 	private void drawUI(Graphics2D g2){
+		Color oldColor = g2.getColor();
 		g2.setColor(Color.cyan);
 		g2.setFont(new Font("Consolas", Font.PLAIN, 12));
 		for(UIField f : ui){
 			g2.drawString(f.toString(),f.getX()*getWidth()/100,f.getY()*getHeight()/100);
 		}
+		g2.setColor(oldColor);
 	}
 	
 	private void drawShips(Graphics2D g2) {
+		Color oldColor = g2.getColor();
 		g2.setColor(Color.green);
 		g2.setFont(new Font("Consolas", Font.PLAIN, 12));
-		float centerX = (float) getSize().getWidth()/2;
-		float centerY = (float) getSize().getHeight()/2;
+		Vector2D center = getScrCenter();
+		float centerX = (float) center.getX();
+		float centerY = (float) center.getY();
 		List<Ship> ships = space.getShipList();
 		for(Ship ship : ships) {
-			Vector2D relpos = ship.getPos().add(following.getPos().scale(-1));
+			Vector2D relpos = following.getPos().distanceVectorTo(ship.getPos());
 			Ship target = following.getTarget();
 			if(ship.equals(target)) {
 				g2.setColor(selectedColor);
-				g2.drawString(ship.toString(), 
+				g2.drawString(ship.toString() + " " + ship.getHealthPercentage(), 
 						centerX + (float)relpos.getX(), 
 						centerY + (float)relpos.getY());
 				g2.setColor(Color.green);
 			} else {
-				g2.drawString(ship.toString(), 
+				g2.drawString(ship.toString() + " " + ship.getHealthPercentage(), 
 						centerX + (float)relpos.getX(), 
 						centerY + (float)relpos.getY());
 			}
 		}
+		g2.setColor(oldColor);
+	}
+	
+	private Vector2D getScrCenter() {
+		double centerX = getSize().getWidth()/2;
+		double centerY = getSize().getHeight()/2;
+		return new Vector2D(centerX, centerY);
+	}
+
+	private void drawLasers(Graphics2D g2) {
+		Color oldColor = g2.getColor();
+		Ship target = following.getTarget();
+		if (target != null && following.isAttacking()) {
+			g2.setColor(getPulsingRed());
+			Vector2D center = getScrCenter();
+			Vector2D targetRelPos = following.getPos().distanceVectorTo(target.getPos());
+			int x1 = (int) center.getX();
+			int y1 = (int) center.getY();
+			int x2 = (int) (targetRelPos.getX() + center.getX());
+			int y2 = (int) (targetRelPos.getY() + center.getY());
+			g2.drawLine(x1, y1, x2, y2);
+		}
+		g2.setColor(oldColor);
 	}
 
 	private void drawFPS(Graphics2D g2) {
@@ -106,6 +129,7 @@ public class RenderPanel extends JPanel {
 	}
 	
 	private void drawBackground(Graphics2D g2) {
+		Color oldColor = g2.getColor();
 		g2.setColor(Color.black);
 		g2.fill(getBounds());
 		
@@ -131,10 +155,20 @@ public class RenderPanel extends JPanel {
 			int y2 = (int) verticalEndVectors[i].getY();
 			g2.drawLine(x, y1, x, y2);
 		}
-//		System.out.println("horizontalStartVectors[0].getX() = " + horizontalStartVectors[0].getX());
+		g2.setColor(oldColor);
 	}
 	
-	public void redrawGrid() {
+	public void recalculateGrid() {
 		grid = new Grid(gridSpace, getSize().width + 1000, getSize().height + 1000);
+	}
+	
+	private Color getPulsingRed() {
+		long time = (long) (System.nanoTime() * Math.pow(10, -8));
+		int minLevel = 128;
+		int amp = 255 - minLevel;
+		double zeroFlooredSine = (Math.sin(1.25 * time) + 1)/2;
+		int level = (int) (amp * zeroFlooredSine + minLevel);
+		Color red = new Color(level, 0, 0);
+		return red;
 	}
 }
