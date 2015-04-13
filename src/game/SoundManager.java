@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -34,6 +35,15 @@ public class SoundManager {
 			targetClose.open(AudioSystem.getAudioInputStream(new File("res/target_close.wav")));
 			targetMedium.open(AudioSystem.getAudioInputStream(new File("res/target_medium.wav")));
 			targetFar.open(AudioSystem.getAudioInputStream(new File("res/target_far.wav")));
+			
+			FloatControl tCControl = (FloatControl) targetClose.getControl(FloatControl.Type.MASTER_GAIN);
+			FloatControl tMControl = (FloatControl) targetMedium.getControl(FloatControl.Type.MASTER_GAIN);
+			FloatControl tFControl = (FloatControl) targetFar.getControl(FloatControl.Type.MASTER_GAIN);
+			
+			int proximityVolume = -16;
+			tCControl.setValue(proximityVolume);
+			tMControl.setValue(proximityVolume);
+			tFControl.setValue(proximityVolume);
 			
 			sounds.put(BACKGROUND_SN, background);
 			sounds.put(ALARM_SN, alarm);

@@ -1,13 +1,6 @@
 package gui;
 
-import game.DrunkenShip;
-import game.GravityWell;
-import game.PlayerShip;
-import game.Ship;
-import game.SoundManager;
-import game.Space;
-import game.Station;
-import game.Vector2D;
+import game.*;
 
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -37,10 +30,10 @@ public class RadarWindow extends JFrame {
 		this.space = space;
 		uiTexts = new ArrayList<UIField>();
 		generateShips();
-		generateUIText();
 		p1 = new PlayerShip(keyboardStateListener,space);
 		p1.setPos(new Vector2D(0, 0));
 		space.spawnShip(p1);
+		generateUIText();
 
 		renderPanel = new RenderPanel(uiTexts,space,p1);
 		renderPanel.setLocation(0,0);
@@ -50,6 +43,7 @@ public class RadarWindow extends JFrame {
 		setSize(1100, 800);
 		setLayout(null);	//ensures that absolute positioning is possible
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 		setVisible(true);
 		soundManager = new SoundManager(p1);
 		initLoop();
@@ -92,22 +86,25 @@ public class RadarWindow extends JFrame {
 	
 	private void generateShips() {
 		
-		Ship p2 = new DrunkenShip();
-		Ship p3 = new DrunkenShip();
-		Ship st = new Station();
+		Ship p2 = new DrunkenShip(space);
+		Ship p3 = new DrunkenShip(space);
+		Ship st = new Station(space);
 		Ship gw = new GravityWell(1,space);
+		Ship pr = new PirateShip(space);
 		p2.setPos(new Vector2D(20, 250));
 		p3.setPos(new Vector2D(100, 100));
 		st.setPos(new Vector2D(300,100));
 		gw.setPos(new Vector2D(-300,-300));
+		pr.setPos(new Vector2D(-20,-20));
 		space.spawnShip(p2);
 		space.spawnShip(p3);
 		space.spawnShip(st);
 		space.spawnShip(gw);
+		space.spawnShip(pr);
 	}
 	
 	private void generateUIText(){
-		uiTexts.add(new UIField(20,20,"Hello!"));
+		uiTexts.add(new StatusBar(p1));
 	}
 	
 	// TODO add a better fucking name...

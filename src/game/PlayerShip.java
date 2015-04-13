@@ -1,5 +1,7 @@
 package game;
 
+import globals.Globals;
+
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Observable;
@@ -15,17 +17,16 @@ public class PlayerShip extends Ship implements Observer{
 	
 	private KeyboardStateListener keyboard;
 	private boolean inertia = false;
-	private Space space;
 	private List<Ship> hits;
 	private int target;
 	private boolean attacking = false;
 	
 	public PlayerShip(KeyboardStateListener ksl, Space s){
-		name = "^";
+		super(s, ". player", 200);
 		keyboard = ksl;
 		ksl.addObserver(this);
-		space = s;
 		target = NO_TARGET;
+		damageAmount = 20;
 	}
 
 	@Override
@@ -34,6 +35,9 @@ public class PlayerShip extends Ship implements Observer{
 		vel = vel.add(arrowDir);
 		if(inertia){
 			vel = vel.add(vel.scale(-0.05));
+		}
+		if(attacking){
+			getTarget().damage(1);
 		}
 	}
 	
@@ -50,6 +54,19 @@ public class PlayerShip extends Ship implements Observer{
 	public boolean isAttacking() {
 		return attacking;
 	}
+	
+	public String status(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("HULL: ");
+		sb.append(getHealthPercentage() + " | ");
+		sb.append("INERTIA: ");
+		sb.append(inertia?"ON  | ":"OFF | ");
+		sb.append("TARGET-DISTANCE: ");
+			if(getTarget() == null) sb.append("-");
+			else sb.append(pos.distance(getTarget().pos));
+		
+		return sb.toString();
+	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
@@ -64,14 +81,14 @@ public class PlayerShip extends Ship implements Observer{
 			else
 				System.out.println("deactivated");
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_S){
+		else if(e.getKeyCode() == Globals.KeyCodes.SCAN){
 			hits = space.scan(pos, 1000);
 			if (hits != null && hits.size() != 0)
 				target = 0;
 			else target = NO_TARGET;
 			System.out.println("Scan report: " + hits);
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_R){
+		else if(e.getKeyCode() == Globals.KeyCodes.NEXT_TARGET){
 			if(hits == null || hits.size() == 0){
 				hits = space.scan(pos, 1000);
 				target = 0 % hits.size();
@@ -79,7 +96,7 @@ public class PlayerShip extends Ship implements Observer{
 			target = Math.abs(target + 1) % hits.size();
 			System.out.println("targetnr = " + target);
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_E){
+		else if(e.getKeyCode() == Globals.KeyCodes.PREV_TARGET){
 			if(hits == null || hits.size() == 0){
 				hits = space.scan(pos, 1000);
 				target = 1 % hits.size();
@@ -87,11 +104,10 @@ public class PlayerShip extends Ship implements Observer{
 			target = Math.abs(target - 1) % hits.size();
 			System.out.println("dargetnr = " + target);
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+		else if(e.getKeyCode() == Globals.KeyCodes.FIRE_LASER) {
 			Ship target = getTarget();
 			if (target != null) {
-//				System.out.println("Fire laser at " + target.name);
-				new LaserAttackTask(this, System.nanoTime() + 1 * (long)Math.pow(10, 9)).start();
+				new LaserAttackTask(this, target, System.nanoTime() + 1 * (long)Math.pow(10, 9)).start();
 			}
 		}
 	}
@@ -99,21 +115,23 @@ public class PlayerShip extends Ship implements Observer{
 	private class LaserAttackTask extends Thread {
 		private long executionTime;
 		private PlayerShip parent;
+		private Ship target;
 		
 		/**
 		 * 
 		 * @param executionTime the time when the task should be executed in nanoseconds
 		 */
-		public LaserAttackTask(PlayerShip parent, long executionTime) {
+		public LaserAttackTask(PlayerShip parent, Ship target, long executionTime) {
 			this.executionTime = executionTime;
 			this.parent = parent;
+			this.target = target;
 		}
 		
 		@Override
 		public void run() {
 			parent.attacking = true;
-			while (System.nanoTime() - executionTime <= 0);
-			//inflict damage on parent.getTarget()
+			while (System.nanoTime() - executionTime <= 0 && !target.isKill());
+			//target.damage(damageAmount);
 			parent.attacking = false;
 		}
 	}

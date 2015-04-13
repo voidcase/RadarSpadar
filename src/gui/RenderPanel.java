@@ -64,7 +64,7 @@ public class RenderPanel extends JPanel {
 		g2.setColor(Color.cyan);
 		g2.setFont(new Font("Consolas", Font.PLAIN, 12));
 		for(UIField f : ui){
-			g2.drawString(f.toString(),f.getX(),f.getY());
+			g2.drawString(f.toString(),f.getX(this),f.getY(this));
 		}
 		g2.setColor(oldColor);
 	}
@@ -82,12 +82,12 @@ public class RenderPanel extends JPanel {
 			Ship target = following.getTarget();
 			if(ship.equals(target)) {
 				g2.setColor(selectedColor);
-				g2.drawString(ship.toString(), 
+				g2.drawString(ship.toString() + " " + ship.getHealthPercentage(), 
 						centerX + (float)relpos.getX(), 
 						centerY + (float)relpos.getY());
 				g2.setColor(Color.green);
 			} else {
-				g2.drawString(ship.toString(), 
+				g2.drawString(ship.toString() + " " + ship.getHealthPercentage(), 
 						centerX + (float)relpos.getX(), 
 						centerY + (float)relpos.getY());
 			}

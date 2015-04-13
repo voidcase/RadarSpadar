@@ -1,36 +1,23 @@
 package gui;
 
 public class UIField {
-
-	private int x, y;
 	private String text;
 	
-	public UIField(int x, int y, String text) {
-		this.x = x;
-		this.y = y;
+	public UIField(String text) {
 		this.text = text;
 	}
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return text;
 	}
 	
-	public int getX(){
-		return x;
+	public int getX(RenderPanel parent){
+		return 0;
 	}
 	
-	public int getY(){
-		return y;
-	}
-	
-	public void setX(int x){
-		this.x = x;
-	}
-	
-	public void setY(int y){
-		this.y = y;
+	public int getY(RenderPanel parent){
+		return 24;
 	}
 	
 	public void setText(String t){
@@ -40,5 +27,4 @@ public class UIField {
 	public void append(String t){
 		text = text + t;
 	}
-	
 }
